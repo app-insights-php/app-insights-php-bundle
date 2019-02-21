@@ -36,6 +36,6 @@
     "require-dev": {
         "app-insights-php/doctrine-dependency-logger": "dev-master",
         "phpunit/phpunit": "^7.1",
-        "friendsofphp/php-cs-fixer": "^2.15@dev"
+        "friendsofphp/php-cs-fixer": "^2.15"
     }
 }
