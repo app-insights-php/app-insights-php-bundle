@@ -1,0 +1,41 @@
+{
+    "name": "app-insights-php/app-insights-php-bundle",
+    "description": "Microsoft App Insights Symfony bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Norbert Orzechowicz",
+            "email": "norbert@orzechowicz.pl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"AppInsightsPHP\\Symfony\\AppInsightsPHPBundle\\": ""},
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "suggest": {
+        "app-insights-php/doctrine-dependency-logger": "Allows trace doctrine dbal queries as dependency metric type."
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.1",
+        "app-insights-php/monolog-handler": "dev-master",
+        "symfony/framework-bundle": "^3.4|^4.0"
+    },
+    "scripts": {
+        "cs:php:fix": [
+            "php-cs-fixer fix"
+        ],
+        "test": [
+            "@test:php:cs",
+            "phpunit"
+        ]
+    },
+    "require-dev": {
+        "app-insights-php/doctrine-dependency-logger": "dev-master",
+        "phpunit/phpunit": "^7.1",
+        "friendsofphp/php-cs-fixer": "^2.15@dev"
+    }
+}
