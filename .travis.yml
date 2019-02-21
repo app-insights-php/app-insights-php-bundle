@@ -52,5 +52,5 @@ install:
 
 script:
   - composer validate --strict --no-check-lock
-  - test:php:cs
+  - composer run test:php:cs
   - ./vendor/bin/simple-phpunit $PHPUNIT_FLAGS
