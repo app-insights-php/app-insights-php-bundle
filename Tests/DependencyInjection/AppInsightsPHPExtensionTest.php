@@ -80,7 +80,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertInstanceOf(DependencyLogger::class, $this->container->get('app_insights_php.doctrine.logger.dependency'));
     }
 
-    public function test_ingored_exceptions_configuration()
+    public function test_ignored_exceptions_configuration()
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
