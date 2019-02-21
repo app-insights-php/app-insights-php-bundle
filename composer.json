@@ -16,7 +16,7 @@
         ]
     },
     "suggest": {
-        "app-insights-php/doctrine-dependency-logger": "Allows trace doctrine dbal queries as dependency metric type."
+        "app-insights-php/doctrine-dependency-logger": "Trace Doctrine DBAL queries as dependency metric type."
     },
     "require": {
         "php": "^7.1",
@@ -25,7 +25,8 @@
     },
     "scripts": {
         "test": [
-            "simple-phpunit"
+            "@test:php:cs",
+            "phpunit"
         ],
         "cs:php:fix": [
             "php-cs-fixer fix"
@@ -37,7 +38,6 @@
     "require-dev": {
         "app-insights-php/doctrine-dependency-logger": "^0.1",
         "phpunit/phpunit": "^7.1",
-        "friendsofphp/php-cs-fixer": "^2.14",
-        "symfony/phpunit-bridge": "^4.2"
+        "friendsofphp/php-cs-fixer": "^2.14"
     }
 }
