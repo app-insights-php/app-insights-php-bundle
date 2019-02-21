@@ -1,6 +1,13 @@
 Installation
 ============
 
+[![Build Status](https://travis-ci.org/app-insights-php/app-insights-php-bundle.svg?branch=master)](https://travis-ci.org/app-insights-php/app-insights-php-bundle)
+
+Supported symfony versions: 
+
+* `>= 3.4`
+* `>= 4.0` 
+
 Applications that use Symfony Flex
 ----------------------------------
 
