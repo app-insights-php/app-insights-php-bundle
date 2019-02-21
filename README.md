@@ -4,11 +4,14 @@ Installation
 Applications that use Symfony Flex
 ----------------------------------
 
+(**Not available yet**)
+
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require app-insights-php/app-insights-php-bundle
+$ composer require app-insights-php
 ```
+
 
 Applications that don't use Symfony Flex
 ----------------------------------------
