@@ -25,17 +25,20 @@
         "symfony/framework-bundle": "^3.4|^4.0"
     },
     "scripts": {
+        "test": [
+            "simple-phpunit"
+        ],
         "cs:php:fix": [
             "php-cs-fixer fix"
         ],
-        "test": [
-            "@test:php:cs",
-            "phpunit"
+        "test:php:cs": [
+            "php-cs-fixer fix -v --dry-run --using-cache=no"
         ]
     },
     "require-dev": {
         "app-insights-php/doctrine-dependency-logger": "dev-master",
         "phpunit/phpunit": "^7.1",
-        "friendsofphp/php-cs-fixer": "^2.15"
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "symfony/phpunit-bridge": "^4.3"
     }
 }

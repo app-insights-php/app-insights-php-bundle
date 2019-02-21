@@ -25,7 +25,7 @@ final class AppInsightsPHPExtension extends Extension
         $container->setParameter('app_insights_php.doctrine.track_dependency', $config['doctrine']['track_dependency']);
 
         if ($config['doctrine']['track_dependency']) {
-            if (!\class_exists('AppInsightsPHP\\Doctrine\\DBAL\\Logging\\DependencyLogger')) {
+            if (!class_exists('AppInsightsPHP\\Doctrine\\DBAL\\Logging\\DependencyLogger')) {
                 throw new \RuntimeException('Please first run `composer require download app-insights-php/doctrine-dependency-logger` if you want to log DBAL queries.');
             }
 
