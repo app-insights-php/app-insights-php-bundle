@@ -7,7 +7,7 @@ Applications that use Symfony Flex
 Open a command console, enter your project directory and execute:
 
 ```console
-$ composer require app-insights-php
+$ composer require app-insights-php/app-insights-php-bundle
 ```
 
 Applications that don't use Symfony Flex
