@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Tests\DependencyInjection;
 
+use AppInsightsPHP\Client\Client;
+use AppInsightsPHP\Doctrine\DBAL\Logging\DependencyLogger;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\DependencyInjection\AppInsightsPHPExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -57,6 +59,8 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertTrue($this->container->hasDefinition('app_insights_php.symfony.listener.http_request'));
         $this->assertTrue($this->container->hasDefinition('app_insights_php.symfony.listener.kernel_terminate'));
         $this->assertTrue($this->container->hasDefinition('app_insights_php.symfony.listener.exception'));
+
+        $this->assertInstanceOf(Client::class, $this->container->get('app_insights_php.telemetry'));
     }
 
     public function test_doctrine_logger_configuration()
@@ -73,6 +77,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         );
 
         $this->assertTrue($this->container->hasDefinition('app_insights_php.doctrine.logger.dependency'));
+        $this->assertInstanceOf(DependencyLogger::class, $this->container->get('app_insights_php.doctrine.logger.dependency'));
     }
 
     public function test_ingored_exceptions_configuration()

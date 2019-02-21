@@ -6,7 +6,7 @@
     <services>
         <defaults public="false" />
 
-        <service id="app_insights_php.doctrine.logger.dependency" class="AppInsightsPHP\Doctrine\DBAL\Logging\AppInsightsLogger">
+        <service id="app_insights_php.doctrine.logger.dependency" class="AppInsightsPHP\Doctrine\DBAL\Logging\DependencyLogger">
             <argument type="service" id="app_insights_php.telemetry" />
         </service>
 
