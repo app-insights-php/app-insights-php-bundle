@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\DependencyInjection;
 
+use Monolog\Logger;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -13,6 +14,8 @@ final class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder('app_insights_php');
         $rootNode = method_exists(TreeBuilder::class, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('app_insights_php');
+
+        $allowedLoggerTypes = ['trace'];
 
         $rootNode
             ->children()
@@ -49,6 +52,28 @@ final class Configuration implements ConfigurationInterface
                     ->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('track_dependency')->defaultFalse()->end()
+                    ->end()
+                ->end()
+                ->arrayNode('monolog')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('handlers')
+                            ->canBeUnset()
+                            ->useAttributeAsKey('name')
+                            ->arrayPrototype()
+                                ->children()
+                                    ->scalarNode('name')->end()
+                                    ->scalarNode('level')->defaultValue(Logger::DEBUG)->end()
+                                    ->scalarNode('bubble')->defaultTrue()->end()
+                                    ->scalarNode('type')
+                                        ->defaultValue('trace')
+                                        ->validate()
+                                            ->ifNotInArray($allowedLoggerTypes)
+                                            ->thenInvalid(sprintf('Allowed types: [%s]', implode(', ', $allowedLoggerTypes)))
+                                        ->end()
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()

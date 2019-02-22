@@ -79,4 +79,20 @@ app_insights_php:
     enabled: true
   doctrine:
     track_dependency: true
+  monolog:  
+    handlers:
+      trace: # register: app_insights_php.monolog.handler.trace - service  
+        type: trace
+        level: DEBUG
+        bubble: true
+      foo: # register: app_insights_php.monolog.handler.foo - service  
+        type: trace
+        level: ERROR
+        bubble: true
+        
+monolog:
+  handlers:
+  app_insights:
+    type: service
+    id: "app_insights_php.monolog.handler.trace"
 ```
