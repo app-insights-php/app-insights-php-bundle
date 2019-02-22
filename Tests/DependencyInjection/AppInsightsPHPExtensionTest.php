@@ -6,7 +6,9 @@ namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Tests\DependencyInjection;
 
 use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Doctrine\DBAL\Logging\DependencyLogger;
+use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\DependencyInjection\AppInsightsPHPExtension;
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -95,5 +97,26 @@ final class AppInsightsPHPExtensionTest extends TestCase
 
         $this->assertTrue($this->container->get('app_insights_php.configuration')->exceptions()->isIgnored(\RuntimeException::class));
         $this->assertFalse($this->container->get('app_insights_php.configuration')->exceptions()->isIgnored(\Exception::class));
+    }
+
+    public function test_monolog_configuration()
+    {
+        $extension = new AppInsightsPHPExtension();
+        $extension->load(
+            [[
+                'instrumentation_key' => 'test_key',
+                'monolog' => [
+                    'handlers' => [
+                        [
+                            'name' => 'foo.logger',
+                            'level' => Logger::DEBUG,
+                        ],
+                    ],
+                ],
+            ]],
+            $this->container
+        );
+
+        $this->assertInstanceOf(AppInsightsTraceHandler::class, $this->container->get('app_insights_php.monolog.handler.foo.logger'));
     }
 }
