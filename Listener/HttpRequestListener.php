@@ -69,7 +69,8 @@ final class HttpRequestListener implements EventSubscriberInterface
             $this->request,
             (int) round(microtime(true) * 1000, 1) - $this->requestStartTimeMs,
             $response->getStatusCode(),
-            $response->isSuccessful()
+            $response->isSuccessful(),
+            $event->getRequest()->query->all()
         );
     }
 }
