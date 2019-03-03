@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the App Insights PHP project.
+ *
+ * (c) Norbert Orzechowicz <norbert@orzechowicz.pl>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Twig;
 
 use AppInsightsPHP\Client\Client;
@@ -40,7 +49,7 @@ var appInsights=window.appInsights||function(a){
 
 window.appInsights.queue.push(function () {
     appInsights.context.operation.id = '%s';
-});
+});\n
 JS
             , $this->client->getContext()->getInstrumentationKey(), $this->client->getContext()->getOperationContext()->getId()
         );
