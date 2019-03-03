@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Twig;
 
+use AppInsightsPHP\Client\Client;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -11,7 +12,7 @@ final class TelemetryExtension extends AbstractExtension
 {
     private $client;
 
-    public function __construct(\AppInsightsPHP\Client\Client $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
@@ -22,7 +23,7 @@ final class TelemetryExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('app_insights_php', [$this, 'appInsightsPHP']),
+            new TwigFunction('app_insights_php', [$this, 'appInsightsPHP'], ['is_safe' => ['html']]),
         ];
     }
 
