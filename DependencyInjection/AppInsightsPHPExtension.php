@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\DependencyInjection;
 
 use AppInsightsPHP\Client\Client;
+use AppInsightsPHP\Monolog\Handler\AppInsightsDependencyHandler;
 use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -98,6 +99,12 @@ final class AppInsightsPHPExtension extends Extension
                             (bool) $handlerConfig['bubble'],
                         ];
                     break;
+                    case 'dependency':
+                        $class = AppInsightsDependencyHandler::class;
+                        $arguments = [
+                            new Reference('app_insights_php.telemetry'),
+                        ];
+                        break;
                     default:
                         throw new \RuntimeException('Unrecognized monolog handler type %s', $handlerConfig['type']);
                 }
