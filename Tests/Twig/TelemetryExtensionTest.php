@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Tests\Twig;
 
@@ -31,7 +31,7 @@ window.appInsights.context.operation.id="operation_id";
 window.appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();
 </script>
 TWIG
-            ,$twigExtension->appInsightsPHP()
+            , $twigExtension->appInsightsPHP()
         );
     }
 
@@ -56,7 +56,7 @@ window.appInsights.setAuthenticatedUserContext("norbert@orzechowicz.pl");
 window.appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();
 </script>
 TWIG
-            ,$twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
+            , $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
         );
     }
 }

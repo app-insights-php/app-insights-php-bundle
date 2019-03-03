@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types=1);
+declare(strict_types=1);
 
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Twig;
 
@@ -38,7 +38,7 @@ var appInsights=window.appInsights||function(a){
 
 window.appInsights=appInsights;\n
 JS
-            ,$this->client->getContext()->getInstrumentationKey()
+            , $this->client->getContext()->getInstrumentationKey()
         );
 
         $script .= sprintf("window.appInsights.context.operation.id=\"%s\";\n", $this->client->getContext()->getOperationContext()->getId());
