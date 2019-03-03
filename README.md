@@ -5,6 +5,11 @@ The AppInsightsPHPBundle brings support for Microsoft Application Insights into 
 It's a profiler you can use on production to track everything that is important for you and your system.
 
 [![Build Status](https://travis-ci.org/app-insights-php/app-insights-php-bundle.svg?branch=master)](https://travis-ci.org/app-insights-php/app-insights-php-bundle)
+[![Latest Stable Version](https://poser.pugx.org/app-insights-php/app-insights-php-bundle/v/stable)](https://packagist.org/packages/app-insights-php/app-insights-php-bundle)
+[![Total Downloads](https://poser.pugx.org/app-insights-php/app-insights-php-bundle/downloads)](https://packagist.org/packages/app-insights-php/app-insights-php-bundle)
+[![Latest Unstable Version](https://poser.pugx.org/app-insights-php/app-insights-php-bundle/v/unstable)](https://packagist.org/packages/app-insights-php/app-insights-php-bundle)
+[![License](https://poser.pugx.org/app-insights-php/app-insights-php-bundle/license)](https://packagist.org/packages/app-insights-php/app-insights-php-bundle)
+
 
 Microsoft App Insights allows you to track on production following metrics
 
@@ -44,7 +49,7 @@ Microsoft App Insights is exactly what you need.
 
 This bundle simplifies App Insights integration with your new or existing project. 
 
-[![Image](https://docs.microsoft.com/en-us/azure/azure-monitor/app/media/web-monitor-performance/performancetriageview7dayszoomedtrendzoomed95th99th.png)]
+![Image](https://docs.microsoft.com/en-us/azure/azure-monitor/app/media/web-monitor-performance/performancetriageview7dayszoomedtrendzoomed95th99th.png)
 
 Documentation
 -------------
