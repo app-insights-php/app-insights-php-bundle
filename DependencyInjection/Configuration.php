@@ -24,7 +24,7 @@ final class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder('app_insights_php');
         $rootNode = method_exists(TreeBuilder::class, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('app_insights_php');
 
-        $allowedLoggerTypes = ['trace'];
+        $allowedLoggerTypes = ['trace', 'dependency'];
 
         $rootNode
             ->children()

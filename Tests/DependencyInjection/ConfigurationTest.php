@@ -45,8 +45,13 @@ final class ConfigurationTest extends Testcase
                 'monolog' => [
                     'handlers' => [
                         [
+                            'type' => 'trace',
                             'name' => 'foo.logger',
                             'level' => Logger::DEBUG,
+                        ],
+                        [
+                            'name' => 'bar.logger',
+                            'type' => 'dependency',
                         ],
                     ],
                 ],
@@ -59,6 +64,7 @@ final class ConfigurationTest extends Testcase
         $this->assertEquals(Logger::DEBUG, $config['monolog']['handlers']['foo.logger']['level']);
         $this->assertTrue($config['monolog']['handlers']['foo.logger']['bubble']);
         $this->assertEquals('trace', $config['monolog']['handlers']['foo.logger']['type']);
+        $this->assertEquals('dependency', $config['monolog']['handlers']['bar.logger']['type']);
     }
 
     protected function process($configs)
