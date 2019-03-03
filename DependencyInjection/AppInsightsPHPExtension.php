@@ -61,6 +61,11 @@ final class AppInsightsPHPExtension extends Extension
 
         $container->getDefinition('app_insights_php.telemetry.factory')->replaceArgument(1, new Reference('app_insights_php.configuration'));
 
+        // Twig
+        if (class_exists('Twig_Environment')) {
+            $loader->load('app_insights_php_twig.xml');
+        }
+
         // Doctrine
         if ($config['doctrine']['track_dependency']) {
             if (!class_exists('AppInsightsPHP\\Doctrine\\DBAL\\Logging\\DependencyLogger')) {

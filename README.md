@@ -1,98 +1,65 @@
-Installation
-============
+AppInsightsPHPBundle
+=============
+
+The AppInsightsPHPBundle brings support for Microsoft Application Insights into Symfony 3.4+ applications.
+It's a profiler you can use on production to track everything that is important for you and your system.
 
 [![Build Status](https://travis-ci.org/app-insights-php/app-insights-php-bundle.svg?branch=master)](https://travis-ci.org/app-insights-php/app-insights-php-bundle)
 
-Supported symfony versions: 
+Microsoft App Insights allows you to track on production following metrics
 
-* `>= 3.4`
-* `>= 4.0` 
+* Traces (Logs with different verbosity level)
+* Requests (http requests served by your app)
+* Custom Events (web/cli/javascript) 
+* Dependencies (SQL, Elasticsearch, Redis - any 3rd party service/system/api)
+* Exceptions (web/cli/javascript)
+* PageViews (javascript)
 
-Applications that use Symfony Flex
-----------------------------------
+Query logs, visualize metrics and pin them to Azure Portal Dashboard, create alerts from metrics & health checks
 
-(**Not available yet**)
+All you need to do is register free [Microsoft Azure Account](https://azure.microsoft.com/en-us/free/free-account-faq/), 
+setup new [App Insights Instance](https://docs.microsoft.com/en-us/azure/azure-monitor/app/create-new-resource) and install
+this bundle in you symfony app. 
 
-Open a command console, enter your project directory and execute:
+This bundle integrates app insights with all important libraries used by most of Symfony based applications.
 
-```console
-$ composer require app-insights-php
-```
+* Monolog Handler (Trace)
+* Doctrine Logger (Dependency) 
+* Symfony HTTP (Request)
+* Symfony Exception (Exceptions)
 
+Microsoft App Insights is perfect for small teams that can't afford expensive monitoring tools or don't
+have enough resources to install, configure and maintain powerful open source alternatives. 
 
-Applications that don't use Symfony Flex
-----------------------------------------
+If you are looking for a SAAS alternative to:
 
-### Step 1: Download the Bundle
+* Graylog / Kibana
+* Zabbix 
+* Grafana 
+* New Relic / Datadog / etc 
+* Google Analytics 
 
-Open a command console, enter your project directory and execute the
-following command to download the latest stable version of this bundle:
+With 90 days data retention period for ~2.5EUR per 5GB [Pricing](https://azure.microsoft.com/en-us/pricing/details/monitor/)
+Microsoft App Insights is exactly what you need. 
 
-```console
-$ composer require app-insights-php/app-insights-php-bundle
-```
+This bundle simplifies App Insights integration with your new or existing project. 
 
-This command requires you to have Composer installed globally, as explained
-in the [installation chapter](https://getcomposer.org/doc/00-intro.md)
-of the Composer documentation.
+[![Image](https://docs.microsoft.com/en-us/azure/azure-monitor/app/media/web-monitor-performance/performancetriageview7dayszoomedtrendzoomed95th99th.png)]
 
-### Step 2: Enable the Bundle
+Documentation
+-------------
 
-Then, enable the bundle by adding it to the list of registered bundles
-in the `app/AppKernel.php` file of your project:
+The source of the documentation is stored in the `Resources/doc/` folder
+in this bundle, and available on symfony.com:
 
-```php
-<?php
-// app/AppKernel.php
+[Read the Documentation for master](Resources/doc/index.md)
 
-// ...
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
-        $bundles = [
-            // ...
-            new AppInsightsPHP\Symfony\AppInsightsPHPBundle\AppInsightsPHPBundle(),
-        ];
+Installation
+------------
 
-        // ...
-    }
+All the installation instructions are located in the documentation.
 
-    // ...
-}
-```
+License
+-------
 
-### Step 3: Configuration
-
-```yaml
-app_insights_php:
-  instrumentation_key: "%env(MICROSOFT_APP_INSIGHTS_INTRUMENTATION_KEY)%"
-  exceptions:
-    enabled: true
-    ignored_exceptions:
-      - 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'
-  dependencies:
-    enabled: true
-  requests:
-    enabled: true
-  traces:
-    enabled: true
-  doctrine:
-    track_dependency: true
-  monolog:  
-    handlers:
-      trace: # register: app_insights_php.monolog.handler.trace - service  
-        type: trace
-        level: DEBUG
-        bubble: true
-      foo: # register: app_insights_php.monolog.handler.foo - service  
-        type: trace
-        level: ERROR
-        bubble: true
-        
-monolog:
-  handlers:
-  app_insights:
-    type: service
-    id: "app_insights_php.monolog.handler.trace"
-```
+This bundle is under the MIT license. See the complete license [in the bundle](LICENSE)
