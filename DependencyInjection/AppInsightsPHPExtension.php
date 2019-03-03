@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\DependencyInjection;
 
+use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -23,6 +24,9 @@ final class AppInsightsPHPExtension extends Extension
 
         $container->setParameter('app_insights_php.instrumentation_key', $config['instrumentation_key']);
         $container->setParameter('app_insights_php.doctrine.track_dependency', $config['doctrine']['track_dependency']);
+
+        // Make autowiring possible
+        $container->setAlias(Client::class, 'app_insights_php.telemetry')->setPublic(true);
 
         $container->setDefinition('app_insights_php.configuration.exceptions',
             new Definition(\AppInsightsPHP\Client\Configuration\Exceptions::class, [
