@@ -8,6 +8,7 @@ use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Doctrine\DBAL\Logging\DependencyLogger;
 use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\DependencyInjection\AppInsightsPHPExtension;
+use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Twig\TelemetryExtension;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -80,6 +81,19 @@ final class AppInsightsPHPExtensionTest extends TestCase
 
         $this->assertTrue($this->container->hasDefinition('app_insights_php.doctrine.logger.dependency'));
         $this->assertInstanceOf(DependencyLogger::class, $this->container->get('app_insights_php.doctrine.logger.dependency'));
+    }
+
+    public function test_twig_configuration()
+    {
+        $extension = new AppInsightsPHPExtension();
+        $extension->load(
+            [[
+                'instrumentation_key' => 'test_key',
+            ]],
+            $this->container
+        );
+
+        $this->assertInstanceOf(TelemetryExtension::class, $this->container->get('app_insights_php.twig.telemetry'));
     }
 
     public function test_ignored_exceptions_configuration()

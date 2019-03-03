@@ -23,7 +23,8 @@
         "app-insights-php/monolog-handler": "^0.1.1",
         "app-insights-php/client": "^0.1.1",
         "symfony/framework-bundle": "^3.4|^4.0",
-        "guzzlehttp/guzzle": "^6.0"
+        "guzzlehttp/guzzle": "^6.0",
+        "twig/twig": "^1.2"
     },
     "scripts": {
         "test": [
