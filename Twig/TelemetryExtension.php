@@ -51,16 +51,15 @@ window.appInsights.queue.push(function () {
     appInsights.context.operation.id = '%s';
 });\n
 JS
-            , $this->client->getContext()->getInstrumentationKey(), $this->client->getContext()->getOperationContext()->getId()
+            , $this->client->getContext()->getInstrumentationKey(),
+            $this->client->getContext()->getOperationContext()->getId()
         );
-
-        $script .= sprintf("window.appInsights.context.operation.id=\"%s\";\n", $this->client->getContext()->getOperationContext()->getId());
 
         if ($userId) {
             $script .= sprintf("window.appInsights.setAuthenticatedUserContext(\"%s\");\n", $userId);
         }
 
-        $script .= "window.appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();\n";
+        $script .= "window.appInsights.trackPageView();\n";
 
         $script .= '</script>';
 
