@@ -72,4 +72,24 @@ TWIG
             , $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
         );
     }
+
+
+    public function test_app_insights_php_function_with_disabled_tracking()
+    {
+        $config = Configuration::createDefault();
+        $config->disable();
+
+        $client = (new ClientFactory('instrumentation_key', $config))->create();
+        $client->getContext()->getOperationContext()->setId('operation_id');
+        $twigExtension = new TelemetryExtension($client);
+
+        $this->assertSame(
+            <<<TWIG
+<script type="text/javascript">
+//app_insights_php integration is disabled, please check bundle configuration.
+</script>
+TWIG
+            , $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
+        );
+    }
 }
