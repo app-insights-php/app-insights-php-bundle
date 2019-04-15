@@ -61,12 +61,12 @@ JS
             }
 
             $script .= "window.appInsights.trackPageView();\n";
-
         } else {
             $script .= "//app_insights_php integration is disabled, please check bundle configuration.\n";
         }
 
         $script .= '</script>';
+
         return $script;
     }
 }

@@ -73,7 +73,6 @@ TWIG
         );
     }
 
-
     public function test_app_insights_php_function_with_disabled_tracking()
     {
         $config = Configuration::createDefault();
