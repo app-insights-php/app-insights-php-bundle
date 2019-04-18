@@ -31,6 +31,7 @@ final class AppInsightsPHPExtension extends Extension
 
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('app_insights_php.xml');
+        $loader->load('app_insights_php_console.xml');
 
         $container->setParameter('app_insights_php.instrumentation_key', $config['instrumentation_key']);
         $container->setParameter('app_insights_php.doctrine.track_dependency', $config['doctrine']['track_dependency']);

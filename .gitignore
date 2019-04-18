@@ -1,3 +1,4 @@
 /vendor/
 composer.lock
 *.cache
+/Tests/Functional/config/app_insights_php.php

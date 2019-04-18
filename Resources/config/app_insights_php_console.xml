@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false" />
+
+        <service id="app_insights_php.symfony.command.track_dependency" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command\TrackDependencyCommand">
+            <argument type="service" id="app_insights_php.telemetry" />
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="app_insights_php.symfony.command.track_metric" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command\TrackMetricCommand">
+            <argument type="service" id="app_insights_php.telemetry" />
+
+            <tag name="console.command"/>
+        </service>
+
+        <service id="app_insights_php.symfony.command.track_event" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command\TrackEventCommand">
+            <argument type="service" id="app_insights_php.telemetry" />
+
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>
