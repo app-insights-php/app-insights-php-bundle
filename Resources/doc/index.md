@@ -70,6 +70,7 @@ In order to obtain instrumentation key please follow [Microsoft official documen
 
 ```yaml
 app_insights_php:
+  enabled: true
   instrumentation_key: "%env(MICROSOFT_APP_INSIGHTS_INTRUMENTATION_KEY)%"
   exceptions:
     enabled: true

@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+declare (strict_types=1);
+
+use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Tests\Functional\AppKernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+
+require __DIR__ . '/../../../vendor/autoload.php';
+
+$input = new ArgvInput();
+
+$kernel = new AppKernel('dev', true);
+$application = new Application($kernel);
+$application->run($input);
