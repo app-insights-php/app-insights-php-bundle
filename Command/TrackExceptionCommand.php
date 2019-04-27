@@ -1,0 +1,82 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the App Insights PHP project.
+ *
+ * (c) Norbert Orzechowicz <norbert@orzechowicz.pl>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command;
+
+use AppInsightsPHP\Client\Client;
+use ApplicationInsights\Channel\Contracts\Data_Point_Type;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
+final class TrackexceptionCommand extends Command
+{
+    public const NAME = 'app-insights:track:exception';
+
+    protected static $defaultName = self::NAME;
+
+    private $client;
+
+    public function __construct(Client $client)
+    {
+        parent::__construct();
+        $this->client = $client;
+    }
+
+    protected function configure()
+    {
+        $this
+            ->setDescription('[<info>App Insights</info>] Track Exception.')
+            ->addArgument('class', InputArgument::OPTIONAL, 'Exception class', '\\Exception')
+            ->addArgument('message', InputArgument::OPTIONAL, 'Exception message', '')
+            ->addOption('properties', null, InputOption::VALUE_OPTIONAL, 'Exception additional properties passed as json object')
+            ->addOption('measurements', null, InputOption::VALUE_OPTIONAL, 'Exception additional measurements passed as json object')
+        ;
+    }
+
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+        if (!class_exists($input->getArgument('class'))) {
+            throw new \InvalidArgumentException('Argument class must be a valid class');
+        }
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        $io = new SymfonyStyle($input, $output);
+
+        $class = $input->getArgument('class');
+
+        $this->client->trackException(
+            new $class($input->getArgument('message')),
+            $input->getOption('properties') ? json_decode($input->getOption('properties'), true) : null,
+            $input->getOption('measurements') ? json_decode($input->getOption('measurements'), true) : null
+        );
+
+        $response = $this->client->flush();
+
+        if (200 === $response->getStatusCode()) {
+            $io->success('Telemetry successfully sent.');
+            $io->note((string) $response->getBody());
+        } else {
+            $io->success('Something went wrong.');
+            $io->note('Status Code: '.$response->getStatusCode());
+            $io->note((string) $response->getBody());
+        }
+
+        return 0;
+    }
+}
