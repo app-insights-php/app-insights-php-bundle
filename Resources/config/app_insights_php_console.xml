@@ -24,5 +24,11 @@
 
             <tag name="console.command"/>
         </service>
+
+        <service id="app_insights_php.symfony.command.track_exception" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command\TrackExceptionCommand">
+            <argument type="service" id="app_insights_php.telemetry" />
+
+            <tag name="console.command"/>
+        </service>
     </services>
 </container>
