@@ -40,7 +40,7 @@
     },
     "require-dev": {
         "app-insights-php/doctrine-dependency-logger": "^0.1",
-        "phpunit/phpunit": "^7.1",
+        "phpunit/phpunit": "^8.2",
         "friendsofphp/php-cs-fixer": "^2.14"
     },
     "extra": {
