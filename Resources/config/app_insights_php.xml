@@ -23,6 +23,7 @@
 
         <service id="app_insights_php.symfony.listener.kernel_terminate" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\KernelTerminateListener">
             <argument type="service" id="app_insights_php.telemetry" />
+            <argument/>
 
             <tag name="kernel.event_subscriber" />
         </service>

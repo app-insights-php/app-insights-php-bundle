@@ -75,6 +75,49 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertInstanceOf(Client::class, $this->container->get('app_insights_php.telemetry'));
     }
 
+    public function test_fallback_logger_configuration()
+    {
+        $extension = new AppInsightsPHPExtension();
+        $extension->load(
+            [[
+                'instrumentation_key' => 'test_key',
+                'fallback_logger' => [
+                    'service_id' => 'logger',
+                ],
+            ]],
+            $this->container
+        );
+
+        $this->assertSame(
+            'logger',
+            (string) $this->container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')->getArgument(1)
+        );
+    }
+
+    public function test_fallback_logger_with_monolog_channel_configuration()
+    {
+        $extension = new AppInsightsPHPExtension();
+        $extension->load(
+            [[
+                'instrumentation_key' => 'test_key',
+                'fallback_logger' => [
+                    'service_id' => 'logger',
+                    'monolog_channel' => 'main',
+                ],
+            ]],
+            $this->container
+        );
+
+        $this->assertSame(
+            'logger',
+            (string) $this->container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')->getArgument(1)
+        );
+        $this->assertSame(
+            'main',
+            $this->container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')->getTag('monolog.logger')[0]['channel']
+        );
+    }
+
     public function test_doctrine_logger_configuration()
     {
         $extension = new AppInsightsPHPExtension();
