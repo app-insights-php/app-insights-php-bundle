@@ -72,6 +72,9 @@ In order to obtain instrumentation key please follow [Microsoft official documen
 app_insights_php:
   enabled: true
   instrumentation_key: "%env(MICROSOFT_APP_INSIGHTS_INTRUMENTATION_KEY)%"
+  fallback_logger:         # optional
+    service_id: "logger"   # optional 
+    monolog_logger: "main" # optional 
   exceptions:
     enabled: true
     ignored_exceptions:
@@ -97,10 +100,15 @@ app_insights_php:
         
 monolog:
   handlers:
-  app_insights:
-    type: service
-    id: "app_insights_php.monolog.handler.trace"
+    app_insights:
+      type: service
+      id: "app_insights_php.monolog.handler.trace"
 ```
+
+When most of the configuration is pretty much self descriptive `fallback_logger` might need some extra explanation. 
+Fallback logger is used to log failures in app insights logger. It's used by `KernelTerminateListener`.
+
+You can configure only `service_id` or if using MonologBundle also `monolog_channel`. 
 
 ### Step 5: How it works
 

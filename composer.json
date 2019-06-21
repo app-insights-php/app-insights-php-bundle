@@ -41,7 +41,8 @@
     "require-dev": {
         "app-insights-php/doctrine-dependency-logger": "^0.1",
         "phpunit/phpunit": "^7.1",
-        "friendsofphp/php-cs-fixer": "^2.14"
+        "friendsofphp/php-cs-fixer": "^2.14",
+        "symfony/monolog-bundle": "^3.4"
     },
     "extra": {
         "branch-alias": {

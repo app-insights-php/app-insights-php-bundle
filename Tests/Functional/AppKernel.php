@@ -16,6 +16,7 @@ namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Tests\Functional;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\AppInsightsPHPBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -29,6 +30,7 @@ final class AppKernel extends BaseKernel
     {
         return [
             new FrameworkBundle(),
+            new MonologBundle(),
             new AppInsightsPHPBundle(),
         ];
     }
@@ -45,6 +47,15 @@ final class AppKernel extends BaseKernel
             'secret' => 'S0ME_SECRET',
         ]);
         $c->loadFromExtension('app_insights_php', require_once $configFilePath);
+        $c->loadFromExtension('monolog', [
+            'handlers' => [
+                'file_log' => [
+                    'type' => 'stream',
+                    'path' => '%kernel.logs_dir%/%kernel.environment%.log',
+                    'level' => 'error',
+                ],
+            ],
+        ]);
     }
 
     public function getCacheDir()

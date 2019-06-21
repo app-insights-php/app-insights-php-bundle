@@ -36,6 +36,16 @@ final class AppInsightsPHPExtension extends Extension
         $container->setParameter('app_insights_php.instrumentation_key', $config['instrumentation_key']);
         $container->setParameter('app_insights_php.doctrine.track_dependency', $config['doctrine']['track_dependency']);
 
+        if ((bool) $config['fallback_logger']) {
+            $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
+                ->replaceArgument(1, new Reference($config['fallback_logger']['service_id']));
+
+            if (isset($config['fallback_logger']['monolog_channel'])) {
+                $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
+                    ->addTag('monolog.logger', ['channel' => $config['fallback_logger']['monolog_channel']]);
+            }
+        }
+
         // Make autowiring possible
         $container->setAlias(Client::class, 'app_insights_php.telemetry')->setPublic(true);
 
