@@ -48,7 +48,7 @@ final class TrackMetricCommand extends Command
             ->addOption('max', null, InputOption::VALUE_OPTIONAL, 'Metric max')
             ->addOption('standardDeviation', null, InputOption::VALUE_OPTIONAL, 'Standard deviation')
             ->addOption('measurements', null, InputOption::VALUE_OPTIONAL, 'Metric additional measurements passed as json object')
-            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Flush client directly in the command', false);
+            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)

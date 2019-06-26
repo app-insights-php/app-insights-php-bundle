@@ -43,7 +43,7 @@ final class TrackExceptionCommand extends Command
             ->addArgument('message', InputArgument::OPTIONAL, 'Exception message', '')
             ->addOption('properties', null, InputOption::VALUE_OPTIONAL, 'Exception additional properties passed as json object')
             ->addOption('measurements', null, InputOption::VALUE_OPTIONAL, 'Exception additional measurements passed as json object')
-            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Flush client directly in the command', false);
+            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)

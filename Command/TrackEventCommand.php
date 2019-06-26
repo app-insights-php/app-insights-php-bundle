@@ -42,7 +42,7 @@ final class TrackEventCommand extends Command
             ->addArgument('name', InputArgument::REQUIRED, 'Event name')
             ->addOption('properties', null, InputOption::VALUE_OPTIONAL, 'Event additional properties passed as json object')
             ->addOption('measurements', null, InputOption::VALUE_OPTIONAL, 'Event additional measurements passed as json object')
-            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Flush client directly in the command', false);
+            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
