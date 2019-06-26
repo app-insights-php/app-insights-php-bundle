@@ -79,6 +79,7 @@ app_insights_php:
     enabled: true
     ignored_exceptions:
       - 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'
+      - 'Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException' 
   dependencies:
     enabled: true
   requests:
