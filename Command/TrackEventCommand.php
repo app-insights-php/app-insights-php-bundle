@@ -42,7 +42,7 @@ final class TrackEventCommand extends Command
             ->addArgument('name', InputArgument::REQUIRED, 'Event name')
             ->addOption('properties', null, InputOption::VALUE_OPTIONAL, 'Event additional properties passed as json object')
             ->addOption('measurements', null, InputOption::VALUE_OPTIONAL, 'Event additional measurements passed as json object')
-        ;
+            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Flush client directly in the command', false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -54,6 +54,14 @@ final class TrackEventCommand extends Command
             $input->getOption('properties') ? json_decode($input->getOption('properties'), true) : null,
             $input->getOption('measurements') ? json_decode($input->getOption('measurements'), true) : null
         );
+
+        $dontFlush = false !== $input->getOption('dont-flush');
+
+        if ($dontFlush) {
+            $io->success('Telemetry sent.');
+
+            return 0;
+        }
 
         $response = $this->client->flush();
 
