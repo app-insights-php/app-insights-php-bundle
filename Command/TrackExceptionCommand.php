@@ -43,7 +43,7 @@ final class TrackExceptionCommand extends Command
             ->addArgument('message', InputArgument::OPTIONAL, 'Exception message', '')
             ->addOption('properties', null, InputOption::VALUE_OPTIONAL, 'Exception additional properties passed as json object')
             ->addOption('measurements', null, InputOption::VALUE_OPTIONAL, 'Exception additional measurements passed as json object')
-        ;
+            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -64,6 +64,14 @@ final class TrackExceptionCommand extends Command
             $input->getOption('properties') ? json_decode($input->getOption('properties'), true) : null,
             $input->getOption('measurements') ? json_decode($input->getOption('measurements'), true) : null
         );
+
+        $dontFlush = false !== $input->getOption('dont-flush');
+
+        if ($dontFlush) {
+            $io->success('Telemetry sent.');
+
+            return 0;
+        }
 
         $response = $this->client->flush();
 

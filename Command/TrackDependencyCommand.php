@@ -47,7 +47,7 @@ final class TrackDependencyCommand extends Command
             ->addOption('isSuccessful', null, InputOption::VALUE_OPTIONAL, 'Was the dependency call successful', true)
             ->addOption('resultCode', null, InputOption::VALUE_OPTIONAL, 'Dependency result code')
             ->addOption('properties', null, InputOption::VALUE_OPTIONAL, 'Dependency additional properties passed as json object')
-        ;
+            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -64,6 +64,14 @@ final class TrackDependencyCommand extends Command
             $input->getOption('resultCode'),
             $input->getOption('properties') ? json_decode($input->getOption('properties'), true) : null
         );
+
+        $dontFlush = false !== $input->getOption('dont-flush');
+
+        if ($dontFlush) {
+            $io->success('Telemetry sent.');
+
+            return 0;
+        }
 
         $response = $this->client->flush();
 

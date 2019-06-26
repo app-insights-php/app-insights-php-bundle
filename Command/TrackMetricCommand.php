@@ -48,7 +48,7 @@ final class TrackMetricCommand extends Command
             ->addOption('max', null, InputOption::VALUE_OPTIONAL, 'Metric max')
             ->addOption('standardDeviation', null, InputOption::VALUE_OPTIONAL, 'Standard deviation')
             ->addOption('measurements', null, InputOption::VALUE_OPTIONAL, 'Metric additional measurements passed as json object')
-        ;
+            ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
     protected function initialize(InputInterface $input, OutputInterface $output)
@@ -76,6 +76,14 @@ final class TrackMetricCommand extends Command
             $input->getOption('standardDeviation') ? (float) $input->getOption('standardDeviation') : null,
             $input->getOption('measurements') ? json_decode($input->getOption('measurements'), true) : null
         );
+
+        $dontFlush = false !== $input->getOption('dont-flush');
+
+        if ($dontFlush) {
+            $io->success('Telemetry sent.');
+
+            return 0;
+        }
 
         $response = $this->client->flush();
 
