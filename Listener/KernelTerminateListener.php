@@ -51,7 +51,7 @@ final class KernelTerminateListener implements EventSubscriberInterface
             if ($this->logger) {
                 $this->logger->error(
                     sprintf('Exception occurred while flushing App Insights Telemetry Client: %s', $e->getMessage()),
-                    \json_decode($this->telemetryClient->getChannel()->getSerializedQueue(), true)
+                    json_decode($this->telemetryClient->getChannel()->getSerializedQueue(), true)
                 );
             }
         }
