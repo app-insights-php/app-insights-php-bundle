@@ -72,7 +72,7 @@ final class ConfigurationTest extends Testcase
         $configs = [
             [
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id'
+                'failure_cache_service_id' => 'failure_cache_id',
             ],
         ];
 

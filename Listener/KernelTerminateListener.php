@@ -53,7 +53,7 @@ final class KernelTerminateListener implements EventSubscriberInterface
     {
         if (!\count($this->telemetryClient->getChannel()->getQueue())) {
             // telemetry client queue is empty
-            return ;
+            return;
         }
 
         try {
@@ -69,17 +69,16 @@ final class KernelTerminateListener implements EventSubscriberInterface
 
             $this->telemetryClient->flush();
         } catch (\Throwable $e) {
-
             if ($this->failureCache) {
                 $queueContent = $this->telemetryClient->getChannel()->getQueue();
 
                 if ($this->failureCache->has(self::CACHE_CHANNEL_KEY)) {
-                    $previousQueueContent = \unserialize($this->failureCache->get(self::CACHE_CHANNEL_KEY));
+                    $previousQueueContent = unserialize($this->failureCache->get(self::CACHE_CHANNEL_KEY));
 
                     $queueContent = array_merge($previousQueueContent, $queueContent);
                 }
 
-                $this->failureCache->set(self::CACHE_CHANNEL_KEY, \serialize($queueContent), self:: CACHE_CHANNEL_TTL_SEC);
+                $this->failureCache->set(self::CACHE_CHANNEL_KEY, serialize($queueContent), self:: CACHE_CHANNEL_TTL_SEC);
             }
 
             if ($this->logger) {

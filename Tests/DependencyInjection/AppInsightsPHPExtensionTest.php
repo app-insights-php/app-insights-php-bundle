@@ -118,14 +118,13 @@ final class AppInsightsPHPExtensionTest extends TestCase
         );
     }
 
-
     public function test_failure_cache_configuration()
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
             [[
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id'
+                'failure_cache_service_id' => 'failure_cache_id',
             ]],
             $this->container
         );
