@@ -44,7 +44,8 @@ If you are looking for a SAAS alternative to:
 * New Relic / Datadog / etc 
 * Google Analytics 
 
-With 90 days data retention period for ~2.5EUR per 5GB [Pricing](https://azure.microsoft.com/en-us/pricing/details/monitor/)
+With 90 days data retention period for ~2.5EUR per GB [Pricing](https://azure.microsoft.com/en-us/pricing/details/monitor/)
+First 5GB are free for 31 days..
 Microsoft App Insights is exactly what you need. 
 
 This bundle simplifies App Insights integration with your new or existing project. 

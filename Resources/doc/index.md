@@ -75,6 +75,7 @@ app_insights_php:
   fallback_logger:         # optional
     service_id: "logger"   # optional 
     monolog_logger: "main" # optional 
+  failure_cache_service_id: "your_cache_service_id" # optional
   exceptions:
     enabled: true
     ignored_exceptions:
@@ -106,10 +107,21 @@ monolog:
       id: "app_insights_php.monolog.handler.trace"
 ```
 
+#### fallback_logger
+
 When most of the configuration is pretty much self descriptive `fallback_logger` might need some extra explanation. 
 Fallback logger is used to log failures in app insights logger. It's used by `KernelTerminateListener`.
 
 You can configure only `service_id` or if using MonologBundle also `monolog_channel`. 
+
+### failure_cache_service_id
+
+It happens that from time to time app insights API returns 500 server error. In that case if you use fallback_logger 
+error will be logged but you will also loose anything that supposed to be logged during that failed attempt. 
+
+Failure cache (implementation of \PSR\SimpleCache\CacheInterface) will take whole queue during exception, it will serialize
+it and save for next 24 hours in the cache. During next `onTerminate` with not empty Telemetry client queue content
+of the cache will be deserialized and attached to the upcoming flush.  
 
 ### Step 5: How it works
 

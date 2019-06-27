@@ -67,6 +67,20 @@ final class ConfigurationTest extends Testcase
         $this->assertEquals('dependency', $config['monolog']['handlers']['bar.logger']['type']);
     }
 
+    public function test_failure_cache_configuration()
+    {
+        $configs = [
+            [
+                'instrumentation_key' => 'test_key',
+                'failure_cache_service_id' => 'failure_cache_id'
+            ],
+        ];
+
+        $config = $this->process($configs);
+
+        $this->assertEquals('failure_cache_id', $config['failure_cache_service_id']);
+    }
+
     protected function process($configs)
     {
         $processor = new Processor();

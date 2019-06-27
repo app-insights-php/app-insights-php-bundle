@@ -90,7 +90,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
 
         $this->assertSame(
             'logger',
-            (string) $this->container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')->getArgument(1)
+            (string) $this->container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')->getArgument(2)
         );
     }
 
@@ -110,11 +110,29 @@ final class AppInsightsPHPExtensionTest extends TestCase
 
         $this->assertSame(
             'logger',
-            (string) $this->container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')->getArgument(1)
+            (string) $this->container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')->getArgument(2)
         );
         $this->assertSame(
             'main',
             $this->container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')->getTag('monolog.logger')[0]['channel']
+        );
+    }
+
+
+    public function test_failure_cache_configuration()
+    {
+        $extension = new AppInsightsPHPExtension();
+        $extension->load(
+            [[
+                'instrumentation_key' => 'test_key',
+                'failure_cache_service_id' => 'failure_cache_id'
+            ]],
+            $this->container
+        );
+
+        $this->assertSame(
+            'failure_cache_id',
+            (string) $this->container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')->getArgument(1)
         );
     }
 
