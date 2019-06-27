@@ -37,6 +37,7 @@ final class Configuration implements ConfigurationInterface
                         ->scalarNode('monolog_channel')->end()
                     ->end()
                 ->end()
+                ->scalarNode('failure_cache_service_id')->end()
                 ->arrayNode('exceptions')
                     ->addDefaultsIfNotSet()
                     ->children()

@@ -14,6 +14,11 @@ declare(strict_types=1);
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\DependencyInjection;
 
 use AppInsightsPHP\Client\Client;
+use AppInsightsPHP\Client\Configuration;
+use AppInsightsPHP\Client\Configuration\Dependenies;
+use AppInsightsPHP\Client\Configuration\Exceptions;
+use AppInsightsPHP\Client\Configuration\Requests;
+use AppInsightsPHP\Client\Configuration\Traces;
 use AppInsightsPHP\Monolog\Handler\AppInsightsDependencyHandler;
 use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
 use Symfony\Component\Config\FileLocator;
@@ -38,7 +43,7 @@ final class AppInsightsPHPExtension extends Extension
 
         if ((bool) $config['fallback_logger']) {
             $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
-                ->replaceArgument(1, new Reference($config['fallback_logger']['service_id']));
+                ->replaceArgument(2, new Reference($config['fallback_logger']['service_id']));
 
             if (isset($config['fallback_logger']['monolog_channel'])) {
                 $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
@@ -46,32 +51,37 @@ final class AppInsightsPHPExtension extends Extension
             }
         }
 
+        if (isset($config['failure_cache_service_id'])) {
+            $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
+                ->replaceArgument(1, new Reference($config['failure_cache_service_id']));
+        }
+
         // Make autowiring possible
         $container->setAlias(Client::class, 'app_insights_php.telemetry')->setPublic(true);
 
         $container->setDefinition('app_insights_php.configuration.exceptions',
-            new Definition(\AppInsightsPHP\Client\Configuration\Exceptions::class, [
+            new Definition(Exceptions::class, [
                 $config['exceptions']['enabled'],
                 (array) $config['exceptions']['ignored_exceptions'],
             ])
         );
         $container->setDefinition('app_insights_php.configuration.dependencies',
-            new Definition(\AppInsightsPHP\Client\Configuration\Dependenies::class, [
+            new Definition(Dependenies::class, [
                 $config['dependencies']['enabled'],
             ])
         );
         $container->setDefinition('app_insights_php.configuration.requests',
-            new Definition(\AppInsightsPHP\Client\Configuration\Requests::class, [
+            new Definition(Requests::class, [
                 $config['requests']['enabled'],
             ])
         );
         $container->setDefinition('app_insights_php.configuration.traces',
-            new Definition(\AppInsightsPHP\Client\Configuration\Traces::class, [
+            new Definition(Traces::class, [
                 $config['traces']['enabled'],
             ])
         );
         $container->setDefinition('app_insights_php.configuration',
-            new Definition(\AppInsightsPHP\Client\Configuration::class, [
+            new Definition(Configuration::class, [
                 $config['enabled'],
                 new Reference('app_insights_php.configuration.exceptions'),
                 new Reference('app_insights_php.configuration.dependencies'),
