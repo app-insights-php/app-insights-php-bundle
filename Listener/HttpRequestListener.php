@@ -79,8 +79,6 @@ final class HttpRequestListener implements EventSubscriberInterface
 
         if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
             // instrumentation key is emtpy
-            echo 'INSTRUMENTATION KEY IS EMPTY';
-
             return;
         }
 
