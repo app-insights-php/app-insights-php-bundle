@@ -14,8 +14,8 @@
 
         <service id="app_insights_php.symfony.listener.kernel_terminate" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\KernelTerminateListener">
             <argument type="service" id="app_insights_php.telemetry" />
-            <argument on-invalid="null"/> <!-- Replaced by AppInsightsPHPBundleExtension - failure cache -->
-            <argument on-invalid="null"/> <!-- Replaced by AppInsightsPHPBundleExtension - logger -->
+            <argument /> <!-- Replaced by AppInsightsPHPBundleExtension - failure cache -->
+            <argument /> <!-- Replaced by AppInsightsPHPBundleExtension - logger -->
 
             <tag name="kernel.event_subscriber" />
         </service>
