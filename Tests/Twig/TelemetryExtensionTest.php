@@ -91,4 +91,22 @@ TWIG
             , $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
         );
     }
+
+    public function test_app_insights_php_function_with_empty_instrumentation_key()
+    {
+        $config = Configuration::createDefault();
+
+        $client = (new ClientFactory('', $config))->create();
+        $client->getContext()->getOperationContext()->setId('operation_id');
+        $twigExtension = new TelemetryExtension($client);
+
+        $this->assertSame(
+            <<<TWIG
+<script type="text/javascript">
+//app_insights_php instrumentation_key is empty, please check bundle configuration.
+</script>
+TWIG
+            , $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
+        );
+    }
 }
