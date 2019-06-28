@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <defaults public="false" />
+
+        <service id="app_insights_php.symfony.listener.http_request" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\HttpRequestListener">
+            <argument type="service" id="app_insights_php.telemetry" />
+
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="app_insights_php.symfony.listener.kernel_terminate" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\KernelTerminateListener">
+            <argument type="service" id="app_insights_php.telemetry" />
+            <argument/> <!-- Replaced by AppInsightsPHPBundleExtension - failure cache -->
+            <argument/> <!-- Replaced by AppInsightsPHPBundleExtension - logger -->
+
+            <tag name="kernel.event_subscriber" />
+        </service>
+
+        <service id="app_insights_php.symfony.listener.exception" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\ExceptionListener">
+            <argument type="service" id="app_insights_php.telemetry" />
+            <argument type="collection" />
+
+            <tag name="kernel.event_subscriber" />
+        </service>
+    </services>
+</container>

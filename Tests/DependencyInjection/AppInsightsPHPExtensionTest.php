@@ -75,6 +75,63 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertInstanceOf(Client::class, $this->container->get('app_insights_php.telemetry'));
     }
 
+    public function test_configuration_when_enabled_is_set_to_false()
+    {
+        $extension = new AppInsightsPHPExtension();
+        $extension->load(
+            [[
+                'enabled' => false,
+                'instrumentation_key' => 'test_key',
+            ]],
+            $this->container
+        );
+
+        $this->assertTrue($this->container->hasDefinition('app_insights_php.telemetry'));
+        $this->assertTrue($this->container->hasParameter('app_insights_php.instrumentation_key'));
+
+        $this->assertFalse($this->container->hasDefinition('app_insights_php.doctrine.logger.app_insights'));
+
+        $this->assertFalse($this->container->get('app_insights_php.configuration')->isEnabled());
+        $this->assertTrue($this->container->get('app_insights_php.configuration.exceptions')->isEnabled());
+        $this->assertTrue($this->container->get('app_insights_php.configuration.traces')->isEnabled());
+        $this->assertTrue($this->container->get('app_insights_php.configuration.dependencies')->isEnabled());
+        $this->assertTrue($this->container->get('app_insights_php.configuration.requests')->isEnabled());
+
+        $this->assertFalse($this->container->hasDefinition('app_insights_php.symfony.listener.http_request'));
+        $this->assertFalse($this->container->hasDefinition('app_insights_php.symfony.listener.kernel_terminate'));
+        $this->assertFalse($this->container->hasDefinition('app_insights_php.symfony.listener.exception'));
+
+        $this->assertInstanceOf(Client::class, $this->container->get('app_insights_php.telemetry'));
+    }
+
+    public function test_configuration_when_instrumentation_key_is_empty()
+    {
+        $extension = new AppInsightsPHPExtension();
+        $extension->load(
+            [[
+                'instrumentation_key' => '',
+            ]],
+            $this->container
+        );
+
+        $this->assertTrue($this->container->hasDefinition('app_insights_php.telemetry'));
+        $this->assertTrue($this->container->hasParameter('app_insights_php.instrumentation_key'));
+
+        $this->assertFalse($this->container->hasDefinition('app_insights_php.doctrine.logger.app_insights'));
+
+        $this->assertTrue($this->container->get('app_insights_php.configuration')->isEnabled());
+        $this->assertTrue($this->container->get('app_insights_php.configuration.exceptions')->isEnabled());
+        $this->assertTrue($this->container->get('app_insights_php.configuration.traces')->isEnabled());
+        $this->assertTrue($this->container->get('app_insights_php.configuration.dependencies')->isEnabled());
+        $this->assertTrue($this->container->get('app_insights_php.configuration.requests')->isEnabled());
+
+        $this->assertFalse($this->container->hasDefinition('app_insights_php.symfony.listener.http_request'));
+        $this->assertFalse($this->container->hasDefinition('app_insights_php.symfony.listener.kernel_terminate'));
+        $this->assertFalse($this->container->hasDefinition('app_insights_php.symfony.listener.exception'));
+
+        $this->assertInstanceOf(Client::class, $this->container->get('app_insights_php.telemetry'));
+    }
+
     public function test_fallback_logger_configuration()
     {
         $extension = new AppInsightsPHPExtension();
