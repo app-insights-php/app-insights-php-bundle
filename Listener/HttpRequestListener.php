@@ -46,6 +46,11 @@ final class HttpRequestListener implements EventSubscriberInterface
             return;
         }
 
+        if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
+            // instrumentation key is emtpy
+            return;
+        }
+
         $this->requestStartTime = time();
         $this->requestStartTimeMs = (int) round(microtime(true) * 1000, 1);
 
@@ -69,6 +74,13 @@ final class HttpRequestListener implements EventSubscriberInterface
     public function onKernelResponse(FilterResponseEvent $event)
     {
         if (!$event->isMasterRequest()) {
+            return;
+        }
+
+        if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
+            // instrumentation key is emtpy
+            echo 'INSTRUMENTATION KEY IS EMPTY';
+
             return;
         }
 

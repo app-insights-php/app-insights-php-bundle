@@ -18,17 +18,37 @@ use AppInsightsPHP\Client\Configuration;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\KernelTerminateListener;
 use ApplicationInsights\Channel\Telemetry_Channel;
 use ApplicationInsights\Telemetry_Client;
+use ApplicationInsights\Telemetry_Context;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 
 final class KernelTerminateListenerTest extends TestCase
 {
+    public function test_do_nothing_when_instrumentation_key_is_empty()
+    {
+        $client = new Client($telemetryClientMock = $this->createMock(Telemetry_Client::class), Configuration::createDefault());
+
+        $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
+        $telemetryClientMock->method('getContext')->willReturn($telemetryContextMock = $this->createMock(Telemetry_Context::class));
+        $telemetryContextMock->method('getInstrumentationKey')->willReturn('');
+        $telemetryChannelMock->method('getQueue')->willReturn([]);
+
+        $telemetryClientMock->expects($this->never())
+            ->method('flush');
+
+        $listener = new KernelTerminateListener($client);
+
+        $listener->onTerminate();
+    }
+
     public function test_do_nothing_when_telemetry_queue_is_empty()
     {
         $client = new Client($telemetryClientMock = $this->createMock(Telemetry_Client::class), Configuration::createDefault());
 
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
+        $telemetryClientMock->method('getContext')->willReturn($telemetryContextMock = $this->createMock(Telemetry_Context::class));
+        $telemetryContextMock->method('getInstrumentationKey')->willReturn('instrumentation_key');
         $telemetryChannelMock->method('getQueue')->willReturn([]);
 
         $telemetryClientMock->expects($this->never())
@@ -44,6 +64,8 @@ final class KernelTerminateListenerTest extends TestCase
         $client = new Client($telemetryClientMock = $this->createMock(Telemetry_Client::class), Configuration::createDefault());
 
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
+        $telemetryClientMock->method('getContext')->willReturn($telemetryContextMock = $this->createMock(Telemetry_Context::class));
+        $telemetryContextMock->method('getInstrumentationKey')->willReturn('instrumentation_key');
         $telemetryChannelMock->method('getQueue')->willReturn(['some_log_entry']);
 
         $telemetryClientMock->expects($this->once())
@@ -59,6 +81,8 @@ final class KernelTerminateListenerTest extends TestCase
         $client = new Client($telemetryClientMock = $this->createMock(Telemetry_Client::class), Configuration::createDefault());
 
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
+        $telemetryClientMock->method('getContext')->willReturn($telemetryContextMock = $this->createMock(Telemetry_Context::class));
+        $telemetryContextMock->method('getInstrumentationKey')->willReturn('instrumentation_key');
         $telemetryChannelMock->method('getQueue')->willReturn(['some_log_entry']);
         $telemetryChannelMock->method('getSerializedQueue')->willReturn(json_encode(['some_log_entry']));
 
@@ -79,6 +103,8 @@ final class KernelTerminateListenerTest extends TestCase
         $client = new Client($telemetryClientMock = $this->createMock(Telemetry_Client::class), Configuration::createDefault());
 
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
+        $telemetryClientMock->method('getContext')->willReturn($telemetryContextMock = $this->createMock(Telemetry_Context::class));
+        $telemetryContextMock->method('getInstrumentationKey')->willReturn('instrumentation_key');
         $telemetryChannelMock->method('getQueue')->willReturn(['some_log_entry']);
 
         $telemetryClientMock->method('flush')
@@ -101,6 +127,8 @@ final class KernelTerminateListenerTest extends TestCase
         $client = new Client($telemetryClientMock = $this->createMock(Telemetry_Client::class), Configuration::createDefault());
 
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
+        $telemetryClientMock->method('getContext')->willReturn($telemetryContextMock = $this->createMock(Telemetry_Context::class));
+        $telemetryContextMock->method('getInstrumentationKey')->willReturn('instrumentation_key');
         $telemetryChannelMock->method('getQueue')->willReturn(['some_log_entry']);
 
         $telemetryClientMock->method('flush')
@@ -126,6 +154,8 @@ final class KernelTerminateListenerTest extends TestCase
         $client = new Client($telemetryClientMock = $this->createMock(Telemetry_Client::class), Configuration::createDefault());
 
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
+        $telemetryClientMock->method('getContext')->willReturn($telemetryContextMock = $this->createMock(Telemetry_Context::class));
+        $telemetryContextMock->method('getInstrumentationKey')->willReturn('instrumentation_key');
         $telemetryChannelMock->method('getQueue')->willReturn(['some_log_entry']);
 
         $listener = new KernelTerminateListener($client, $cacheMock = $this->createMock(CacheInterface::class));

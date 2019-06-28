@@ -38,6 +38,11 @@ final class ExceptionListener implements EventSubscriberInterface
 
     public function onException(GetResponseForExceptionEvent $event)
     {
+        if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
+            // instrumentation key is emtpy
+            return;
+        }
+
         if ($this->exceptionLogged) {
             return;
         }

@@ -78,8 +78,16 @@ final class AppInsightsPHPExtension extends Extension
         $container->getDefinition('app_insights_php.telemetry.factory')->replaceArgument(1, new Reference('app_insights_php.configuration'));
 
         // Symfony
-        if ($config['enabled'] && (bool) $config['instrumentation_key']) {
+        if ($config['enabled']) {
             $loader->load('app_insights_php_symfony.xml');
+
+            if (isset($config['failure_cache_service_id'])) {
+                $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
+                    ->replaceArgument(1, new Reference($config['failure_cache_service_id']));
+            } else {
+                $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
+                    ->replaceArgument(1, null);
+            }
 
             if ((bool) $config['fallback_logger']) {
                 $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
@@ -89,11 +97,9 @@ final class AppInsightsPHPExtension extends Extension
                     $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
                         ->addTag('monolog.logger', ['channel' => $config['fallback_logger']['monolog_channel']]);
                 }
-            }
-
-            if (isset($config['failure_cache_service_id'])) {
+            } else {
                 $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
-                    ->replaceArgument(1, new Reference($config['failure_cache_service_id']));
+                    ->replaceArgument(2, null);
             }
         }
 
