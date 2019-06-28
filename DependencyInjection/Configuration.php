@@ -29,7 +29,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->booleanNode('enabled')->defaultTrue()->end()
-                ->scalarNode('instrumentation_key')->isRequired()->cannotBeEmpty()->end()
+                ->scalarNode('instrumentation_key')->isRequired()->end()
                 ->arrayNode('fallback_logger')
                     ->addDefaultsIfNotSet()
                     ->children()

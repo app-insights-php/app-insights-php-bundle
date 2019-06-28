@@ -14,26 +14,5 @@
         <service id="app_insights_php.telemetry" class="ApplicationInsights\Client\Client" public="true">
             <factory service="app_insights_php.telemetry.factory" method="create" />
         </service>
-
-        <service id="app_insights_php.symfony.listener.http_request" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\HttpRequestListener">
-            <argument type="service" id="app_insights_php.telemetry" />
-
-            <tag name="kernel.event_subscriber" />
-        </service>
-
-        <service id="app_insights_php.symfony.listener.kernel_terminate" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\KernelTerminateListener">
-            <argument type="service" id="app_insights_php.telemetry" />
-            <argument/> <!-- Replaced by AppInsightsPHPBundleExtension - cache -->
-            <argument/> <!-- Replaced by AppInsightsPHPBundleExtension - logger -->
-
-            <tag name="kernel.event_subscriber" />
-        </service>
-
-        <service id="app_insights_php.symfony.listener.exception" class="AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\ExceptionListener">
-            <argument type="service" id="app_insights_php.telemetry" />
-            <argument type="collection" />
-
-            <tag name="kernel.event_subscriber" />
-        </service>
     </services>
 </container>
