@@ -51,6 +51,11 @@ final class KernelTerminateListener implements EventSubscriberInterface
 
     public function onTerminate()
     {
+        if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
+            // instrumentation key is emtpy
+            return;
+        }
+
         if (!\count($this->telemetryClient->getChannel()->getQueue())) {
             // telemetry client queue is empty
             return;
