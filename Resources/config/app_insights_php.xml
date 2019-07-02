@@ -8,7 +8,9 @@
 
         <service id="app_insights_php.telemetry.factory" class="AppInsightsPHP\Client\ClientFactory">
             <argument type="string">%app_insights_php.instrumentation_key%</argument>
-            <argument /> <!-- Replaced by AppInsightsPHPBundleExtension -->
+            <argument /> <!-- Replaced by AppInsightsPHPBundleExtension - configuration -->
+            <argument /> <!-- Replaced by AppInsightsPHPBundleExtension - failure cache -->
+            <argument /> <!-- Replaced by AppInsightsPHPBundleExtension - logger -->
         </service>
 
         <service id="app_insights_php.telemetry" class="ApplicationInsights\Client\Client" public="true">

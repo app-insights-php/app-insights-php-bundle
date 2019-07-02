@@ -82,24 +82,24 @@ final class AppInsightsPHPExtension extends Extension
             $loader->load('app_insights_php_symfony.xml');
 
             if (isset($config['failure_cache_service_id'])) {
-                $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
-                    ->replaceArgument(1, new Reference($config['failure_cache_service_id']));
+                $container->getDefinition('app_insights_php.telemetry.factory')
+                    ->replaceArgument(2, new Reference($config['failure_cache_service_id']));
             } else {
-                $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
-                    ->replaceArgument(1, null);
+                $container->getDefinition('app_insights_php.telemetry.factory')
+                    ->replaceArgument(2, null);
             }
 
             if ((bool) $config['fallback_logger']) {
-                $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
-                    ->replaceArgument(2, new Reference($config['fallback_logger']['service_id']));
+                $container->getDefinition('app_insights_php.telemetry.factory')
+                    ->replaceArgument(3, new Reference($config['fallback_logger']['service_id']));
 
                 if (isset($config['fallback_logger']['monolog_channel'])) {
-                    $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
+                    $container->getDefinition('app_insights_php.telemetry.factory')
                         ->addTag('monolog.logger', ['channel' => $config['fallback_logger']['monolog_channel']]);
                 }
             } else {
-                $container->getDefinition('app_insights_php.symfony.listener.kernel_terminate')
-                    ->replaceArgument(2, null);
+                $container->getDefinition('app_insights_php.telemetry.factory')
+                    ->replaceArgument(3, null);
             }
         }
 
