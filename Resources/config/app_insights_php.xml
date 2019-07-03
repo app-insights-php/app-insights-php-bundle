@@ -13,7 +13,7 @@
             <argument /> <!-- Replaced by AppInsightsPHPBundleExtension - logger -->
         </service>
 
-        <service id="app_insights_php.telemetry" class="ApplicationInsights\Client\Client" public="true">
+        <service id="app_insights_php.telemetry" class="AppInsightsPHP\Client\Client" public="true">
             <factory service="app_insights_php.telemetry.factory" method="create" />
         </service>
     </services>
