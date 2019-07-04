@@ -87,6 +87,13 @@ final class TrackMetricCommand extends Command
 
         $response = $this->client->flush();
 
+        if (null === $response) {
+            $io->warning('Telemetry was not sent.');
+            $io->note('Configuration is disabled or there was an error. Please check fallback logs.');
+
+            return 0;
+        }
+
         if (200 === $response->getStatusCode()) {
             $io->success('Telemetry successfully sent.');
             $io->note((string) $response->getBody());
