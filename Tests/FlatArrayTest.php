@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is part of the App Insights PHP project.
+ *
+ * (c) Norbert Orzechowicz <norbert@orzechowicz.pl>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Tests;
 
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\FlatArray;
@@ -42,20 +51,20 @@ final class FlatArrayTest extends TestCase
                 'dimensions' => [
                     'length' => [
                         'value' => 10,
-                        'uom' => 'inches'
+                        'uom' => 'inches',
                     ],
                     'width' => [
                         'value' => 20,
-                        'uom' => 'inches'
+                        'uom' => 'inches',
                     ],
                     'height' => [
                         'value' => 30,
-                        'uom' => 'inches'
-                    ]
+                        'uom' => 'inches',
+                    ],
                 ],
                 'names' => ['John Snow'],
                 'tags' => ['primary', 'default', 'principle'],
-            ]
+            ],
         ];
     }
 }
