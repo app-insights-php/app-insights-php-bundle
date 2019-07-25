@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener;
 
 use AppInsightsPHP\Client\Client;
+use AppInsightsPHP\Symfony\AppInsightsPHPBundle\FlatArray;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -78,10 +79,11 @@ final class HttpRequestListener implements EventSubscriberInterface
         }
 
         if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
-            // instrumentation key is emtpy
+            // instrumentation key is empty
             return;
         }
 
+        $request = $event->getRequest();
         $response = $event->getResponse();
 
         $this->telemetryClient->endRequest(
@@ -89,7 +91,17 @@ final class HttpRequestListener implements EventSubscriberInterface
             (int) round(microtime(true) * 1000, 1) - $this->requestStartTimeMs,
             $response->getStatusCode(),
             $response->isSuccessful() || $response->isRedirection(),
-            $event->getRequest()->query->all()
+            (new FlatArray([
+                'headers' => [
+                    'accept-language' => $request->headers->get('accept-language'),
+                    'accept-encoding' => $request->headers->get('accept-encoding'),
+                    'accept' => $request->headers->get('accept'),
+                    'user-agent' => $request->headers->get('user-agent'),
+                    'host' => $request->headers->get('host'),
+                ],
+                'query' => $request->query->all(),
+                'clientIps' => $request->getClientIps(),
+            ]))()
         );
     }
 }
