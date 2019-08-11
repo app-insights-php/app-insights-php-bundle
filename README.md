@@ -4,7 +4,7 @@ AppInsightsPHPBundle
 The AppInsightsPHPBundle brings support for Microsoft Application Insights into Symfony 3.4+ applications.
 It's a profiler you can use on production to track everything that is important for you and your system.
 
-[![Build Status](https://travis-ci.org/app-insights-php/app-insights-php-bundle.svg?branch=master)](https://travis-ci.org/app-insights-php/app-insights-php-bundle)
+[![Build Status](https://travis-ci.com/app-insights-php/app-insights-php-bundle.svg?branch=master)](https://travis-ci.com/app-insights-php/app-insights-php-bundle)
 [![Latest Stable Version](https://poser.pugx.org/app-insights-php/app-insights-php-bundle/v/stable)](https://packagist.org/packages/app-insights-php/app-insights-php-bundle)
 [![Total Downloads](https://poser.pugx.org/app-insights-php/app-insights-php-bundle/downloads)](https://packagist.org/packages/app-insights-php/app-insights-php-bundle)
 [![Latest Unstable Version](https://poser.pugx.org/app-insights-php/app-insights-php-bundle/v/unstable)](https://packagist.org/packages/app-insights-php/app-insights-php-bundle)
