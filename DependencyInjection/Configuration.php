@@ -29,6 +29,7 @@ final class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->booleanNode('enabled')->defaultTrue()->end()
+                ->booleanNode('gzip_enabled')->defaultFalse()->end()
                 ->scalarNode('instrumentation_key')->isRequired()->end()
                 ->arrayNode('fallback_logger')
                     ->addDefaultsIfNotSet()
@@ -37,7 +38,7 @@ final class Configuration implements ConfigurationInterface
                         ->scalarNode('monolog_channel')->end()
                     ->end()
                 ->end()
-                ->scalarNode('failure_cache_service_id')->end()
+                ->scalarNode('failure_cache_service_id')->isRequired()->end()
                 ->arrayNode('exceptions')
                     ->addDefaultsIfNotSet()
                     ->children()

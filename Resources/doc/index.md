@@ -71,11 +71,12 @@ In order to obtain instrumentation key please follow [Microsoft official documen
 ```yaml
 app_insights_php:
   enabled: true
+  gzip_enabled: false
   instrumentation_key: "%env(MICROSOFT_APP_INSIGHTS_INTRUMENTATION_KEY)%"
   fallback_logger:         # optional
     service_id: "logger"   # optional 
     monolog_logger: "main" # optional 
-  failure_cache_service_id: "your_cache_service_id" # optional
+  failure_cache_service_id: "your_cache_service_id" # mandatory
   exceptions:
     enabled: true
     ignored_exceptions:
@@ -106,6 +107,11 @@ monolog:
       type: service
       id: "app_insights_php.monolog.handler.trace"
 ```
+
+#### gzip_enabled
+
+By default all requests to App Insights are sent uncompressed. If you have `zlib` extension installed then you can use
+gzip compression to save some bandwidth or to send more data in one request. 
 
 #### fallback_logger
 

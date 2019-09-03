@@ -68,7 +68,7 @@ final class TrackMetricCommand extends Command
 
         $this->client->trackMetric(
             $input->getArgument('name'),
-            $input->getArgument('value'),
+            (float) $input->getArgument('value'),
             $input->getOption('type'),
             $input->getOption('count') ? (int) $input->getOption('count') : null,
             $input->getOption('min') ? (int) $input->getOption('min') : null,
