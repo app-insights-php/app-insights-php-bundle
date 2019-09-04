@@ -63,6 +63,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertFalse($this->container->hasDefinition('app_insights_php.doctrine.logger.app_insights'));
 
         $this->assertTrue($this->container->get('app_insights_php.configuration')->isEnabled());
+        $this->assertFalse($this->container->get('app_insights_php.configuration')->gzipEnabled());
         $this->assertTrue($this->container->get('app_insights_php.configuration.exceptions')->isEnabled());
         $this->assertTrue($this->container->get('app_insights_php.configuration.traces')->isEnabled());
         $this->assertTrue($this->container->get('app_insights_php.configuration.dependencies')->isEnabled());
@@ -230,5 +231,19 @@ final class AppInsightsPHPExtensionTest extends TestCase
         );
 
         $this->assertInstanceOf(AppInsightsTraceHandler::class, $this->container->get('app_insights_php.monolog.handler.foo.logger'));
+    }
+
+    public function test_gzip_configuration()
+    {
+        $extension = new AppInsightsPHPExtension();
+        $extension->load(
+            [[
+                'instrumentation_key' => 'test_key',
+                'gzip_enabled' => true,
+            ]],
+            $this->container
+        );
+
+        $this->assertTrue($this->container->get('app_insights_php.configuration')->gzipEnabled());
     }
 }

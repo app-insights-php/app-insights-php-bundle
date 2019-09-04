@@ -15,10 +15,14 @@ namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Tests\Command;
 
 use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Client\Configuration;
+use AppInsightsPHP\Client\FailureCache;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command\TrackExceptionCommand;
+use ApplicationInsights\Channel\Telemetry_Channel;
 use ApplicationInsights\Telemetry_Client;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
+use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -26,7 +30,15 @@ final class TrackExceptionCommandTest extends TestCase
 {
     public function test_tracking_metric()
     {
-        $client = new Client($telemetryClientMock = $this->createMock(Telemetry_Client::class), Configuration::createDefault());
+        $telemetryClientMock = $this->createMock(Telemetry_Client::class);
+        $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
+
+        $client = new Client(
+            $telemetryClientMock,
+            Configuration::createDefault(),
+            new FailureCache($this->createMock(CacheInterface::class)),
+            new NullLogger()
+        );
 
         $application = new Application();
         $application->add(new TrackexceptionCommand($client));

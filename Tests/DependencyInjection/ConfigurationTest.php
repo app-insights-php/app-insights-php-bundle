@@ -31,7 +31,9 @@ final class ConfigurationTest extends Testcase
         $config = $this->process($configs);
 
         $this->assertEquals('test_key', $config['instrumentation_key']);
+        $this->assertNull($config['failure_cache_service_id']);
         $this->assertTrue($config['enabled']);
+        $this->assertFalse($config['gzip_enabled']);
         $this->assertEquals([], $config['exceptions']['ignored_exceptions']);
         $this->assertFalse($config['doctrine']['track_dependency']);
         $this->assertEmpty($config['monolog']['handlers']);
@@ -65,6 +67,20 @@ final class ConfigurationTest extends Testcase
         $this->assertTrue($config['monolog']['handlers']['foo.logger']['bubble']);
         $this->assertEquals('trace', $config['monolog']['handlers']['foo.logger']['type']);
         $this->assertEquals('dependency', $config['monolog']['handlers']['bar.logger']['type']);
+    }
+
+    public function test_gzip_configuration()
+    {
+        $configs = [
+            [
+                'instrumentation_key' => 'test_key',
+                'gzip_enabled' => true,
+            ],
+        ];
+
+        $config = $this->process($configs);
+
+        $this->assertTrue($config['gzip_enabled']);
     }
 
     public function test_failure_cache_configuration()

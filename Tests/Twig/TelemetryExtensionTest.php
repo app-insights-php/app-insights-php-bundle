@@ -17,12 +17,14 @@ use AppInsightsPHP\Client\ClientFactory;
 use AppInsightsPHP\Client\Configuration;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Twig\TelemetryExtension;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
+use Psr\SimpleCache\CacheInterface;
 
 final class TelemetryExtensionTest extends TestCase
 {
     public function test_app_insights_php_function_without_user_id()
     {
-        $client = (new ClientFactory('instrumentation_key', Configuration::createDefault()))->create();
+        $client = (new ClientFactory('instrumentation_key', Configuration::createDefault(), $this->createMock(CacheInterface::class), new NullLogger()))->create();
         $client->getContext()->getOperationContext()->setId('operation_id');
         $twigExtension = new TelemetryExtension($client);
 
@@ -48,7 +50,7 @@ TWIG
 
     public function test_app_insights_php_function_with_user_id()
     {
-        $client = (new ClientFactory('instrumentation_key', Configuration::createDefault()))->create();
+        $client = (new ClientFactory('instrumentation_key', Configuration::createDefault(), $this->createMock(CacheInterface::class), new NullLogger()))->create();
         $client->getContext()->getOperationContext()->setId('operation_id');
         $twigExtension = new TelemetryExtension($client);
 
@@ -78,7 +80,7 @@ TWIG
         $config = Configuration::createDefault();
         $config->disable();
 
-        $client = (new ClientFactory('instrumentation_key', $config))->create();
+        $client = (new ClientFactory('instrumentation_key', $config, $this->createMock(CacheInterface::class), new NullLogger()))->create();
         $client->getContext()->getOperationContext()->setId('operation_id');
         $twigExtension = new TelemetryExtension($client);
 
@@ -96,7 +98,7 @@ TWIG
     {
         $config = Configuration::createDefault();
 
-        $client = (new ClientFactory('', $config))->create();
+        $client = (new ClientFactory('', $config, $this->createMock(CacheInterface::class), new NullLogger()))->create();
         $client->getContext()->getOperationContext()->setId('operation_id');
         $twigExtension = new TelemetryExtension($client);
 

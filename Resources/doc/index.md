@@ -71,6 +71,7 @@ In order to obtain instrumentation key please follow [Microsoft official documen
 ```yaml
 app_insights_php:
   enabled: true
+  gzip_enabled: false
   instrumentation_key: "%env(MICROSOFT_APP_INSIGHTS_INTRUMENTATION_KEY)%"
   fallback_logger:         # optional
     service_id: "logger"   # optional 
@@ -107,6 +108,11 @@ monolog:
       id: "app_insights_php.monolog.handler.trace"
 ```
 
+#### gzip_enabled
+
+By default all requests to App Insights are sent uncompressed. If you have `zlib` extension installed then you can use
+gzip compression to save some bandwidth or to send more data in one request. 
+
 #### fallback_logger
 
 When most of the configuration is pretty much self descriptive `fallback_logger` might need some extra explanation. 
@@ -122,6 +128,8 @@ error will be logged but you will also loose anything that supposed to be logged
 Failure cache (implementation of \PSR\SimpleCache\CacheInterface) will take whole queue during exception, it will serialize
 it and save for next 24 hours in the cache. During next `onTerminate` with not empty Telemetry client queue content
 of the cache will be deserialized and attached to the upcoming flush.  
+
+On default [NullObject implementation](../../Cache/NullCache.php) is used.
 
 ### Step 5: How it works
 

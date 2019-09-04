@@ -21,6 +21,8 @@ use AppInsightsPHP\Client\Configuration\Requests;
 use AppInsightsPHP\Client\Configuration\Traces;
 use AppInsightsPHP\Monolog\Handler\AppInsightsDependencyHandler;
 use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
+use Psr\Log\NullLogger;
+use Symfony\Component\Cache\Simple\NullCache;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -68,6 +70,7 @@ final class AppInsightsPHPExtension extends Extension
         $container->setDefinition('app_insights_php.configuration',
             new Definition(Configuration::class, [
                 $config['enabled'],
+                $config['gzip_enabled'],
                 new Reference('app_insights_php.configuration.exceptions'),
                 new Reference('app_insights_php.configuration.dependencies'),
                 new Reference('app_insights_php.configuration.requests'),
@@ -78,28 +81,34 @@ final class AppInsightsPHPExtension extends Extension
         $container
             ->getDefinition('app_insights_php.telemetry.factory')
             ->replaceArgument(1, new Reference('app_insights_php.configuration'))
-            ->replaceArgument(2, null)
-            ->replaceArgument(3, null)
         ;
+
+        if ((bool) $config['failure_cache_service_id']) {
+            $container->getDefinition('app_insights_php.telemetry.factory')
+                ->replaceArgument(2, new Reference($config['failure_cache_service_id']));
+        } else {
+            $container->setDefinition('app_insights_php.failure_cache.null', new Definition(NullCache::class));
+            $container->getDefinition('app_insights_php.telemetry.factory')
+                ->replaceArgument(2, new Reference('app_insights_php.failure_cache.null'));
+        }
+
+        if ((bool) $config['fallback_logger']) {
+            $container->getDefinition('app_insights_php.telemetry.factory')
+                ->replaceArgument(3, new Reference($config['fallback_logger']['service_id']));
+
+            if (isset($config['fallback_logger']['monolog_channel'])) {
+                $container->getDefinition('app_insights_php.telemetry.factory')
+                    ->addTag('monolog.logger', ['channel' => $config['fallback_logger']['monolog_channel']]);
+            }
+        } else {
+            $container->setDefinition('app_insights_php.logger.null', new Definition(NullLogger::class));
+            $container->getDefinition('app_insights_php.telemetry.factory')
+                ->replaceArgument(3, new Reference('app_insights_php.logger.null'));
+        }
 
         // Symfony
         if ($config['enabled']) {
             $loader->load('app_insights_php_symfony.xml');
-
-            if (isset($config['failure_cache_service_id'])) {
-                $container->getDefinition('app_insights_php.telemetry.factory')
-                    ->replaceArgument(2, new Reference($config['failure_cache_service_id']));
-            }
-
-            if ((bool) $config['fallback_logger']) {
-                $container->getDefinition('app_insights_php.telemetry.factory')
-                    ->replaceArgument(3, new Reference($config['fallback_logger']['service_id']));
-
-                if (isset($config['fallback_logger']['monolog_channel'])) {
-                    $container->getDefinition('app_insights_php.telemetry.factory')
-                        ->addTag('monolog.logger', ['channel' => $config['fallback_logger']['monolog_channel']]);
-                }
-            }
         }
 
         // Twig

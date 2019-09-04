@@ -20,8 +20,8 @@
     },
     "require": {
         "php": "^7.1",
-        "app-insights-php/monolog-handler": "^0.2",
-        "app-insights-php/client": "^0.2.2",
+        "app-insights-php/monolog-handler": "^0.2.1",
+        "app-insights-php/client": "^0.2.3",
         "symfony/framework-bundle": "^3.4|^4.0",
         "guzzlehttp/guzzle": "^6.0",
         "twig/twig": "^1.2|^2"
