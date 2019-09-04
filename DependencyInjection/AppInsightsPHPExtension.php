@@ -21,8 +21,10 @@ use AppInsightsPHP\Client\Configuration\Requests;
 use AppInsightsPHP\Client\Configuration\Traces;
 use AppInsightsPHP\Monolog\Handler\AppInsightsDependencyHandler;
 use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
-use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Cache\NullCache;
 use Psr\Log\NullLogger;
+use Symfony\Component\Cache\Adapter\NullAdapter;
+use Symfony\Component\Cache\Psr16Cache;
+use Symfony\Component\Cache\Simple\NullCache;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -87,7 +89,8 @@ final class AppInsightsPHPExtension extends Extension
             $container->getDefinition('app_insights_php.telemetry.factory')
                 ->replaceArgument(2, new Reference($config['failure_cache_service_id']));
         } else {
-            $container->setDefinition('app_insights_php.failure_cache.null', new Definition(NullCache::class));
+            $container->setDefinition('app_insights_php.failure_cache.adapter.null', new Definition(NullAdapter::class));
+            $container->setDefinition('app_insights_php.failure_cache.null', new Definition(Psr16Cache::class, [new Reference('app_insights_php.failure_cache.adapter.null')]));
             $container->getDefinition('app_insights_php.telemetry.factory')
                 ->replaceArgument(2, new Reference('app_insights_php.failure_cache.null'));
         }
