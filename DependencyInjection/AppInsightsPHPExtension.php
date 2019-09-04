@@ -24,7 +24,6 @@ use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
 use Psr\Log\NullLogger;
 use Symfony\Component\Cache\Adapter\NullAdapter;
 use Symfony\Component\Cache\Psr16Cache;
-use Symfony\Component\Cache\Simple\NullCache;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
