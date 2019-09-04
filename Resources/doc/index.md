@@ -76,7 +76,7 @@ app_insights_php:
   fallback_logger:         # optional
     service_id: "logger"   # optional 
     monolog_logger: "main" # optional 
-  failure_cache_service_id: "your_cache_service_id" # mandatory
+  failure_cache_service_id: "your_cache_service_id" # optional
   exceptions:
     enabled: true
     ignored_exceptions:
@@ -128,6 +128,8 @@ error will be logged but you will also loose anything that supposed to be logged
 Failure cache (implementation of \PSR\SimpleCache\CacheInterface) will take whole queue during exception, it will serialize
 it and save for next 24 hours in the cache. During next `onTerminate` with not empty Telemetry client queue content
 of the cache will be deserialized and attached to the upcoming flush.  
+
+On default [NullObject implementation](../../Cache/NullCache.php) is used.
 
 ### Step 5: How it works
 

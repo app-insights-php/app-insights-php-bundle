@@ -17,12 +17,10 @@ use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Doctrine\DBAL\Logging\DependencyLogger;
 use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\DependencyInjection\AppInsightsPHPExtension;
-use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Tests\Double\NullCache;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Twig\TelemetryExtension;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 final class AppInsightsPHPExtensionTest extends TestCase
@@ -51,13 +49,10 @@ final class AppInsightsPHPExtensionTest extends TestCase
 
     public function test_default_configuration()
     {
-        $this->container->setDefinition('failure_cache_id', new Definition(NullCache::class));
-
         $extension = new AppInsightsPHPExtension();
         $extension->load(
             [[
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id',
             ]],
             $this->container
         );
@@ -83,14 +78,11 @@ final class AppInsightsPHPExtensionTest extends TestCase
 
     public function test_configuration_when_enabled_is_set_to_false()
     {
-        $this->container->setDefinition('failure_cache_id', new Definition(NullCache::class));
-
         $extension = new AppInsightsPHPExtension();
         $extension->load(
             [[
                 'enabled' => false,
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id',
             ]],
             $this->container
         );
@@ -119,7 +111,6 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $extension->load(
             [[
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id',
                 'fallback_logger' => [
                     'service_id' => 'logger',
                 ],
@@ -139,7 +130,6 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $extension->load(
             [[
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id',
                 'fallback_logger' => [
                     'service_id' => 'logger',
                     'monolog_channel' => 'main',
@@ -177,13 +167,10 @@ final class AppInsightsPHPExtensionTest extends TestCase
 
     public function test_doctrine_logger_configuration()
     {
-        $this->container->setDefinition('failure_cache_id', new Definition(NullCache::class));
-
         $extension = new AppInsightsPHPExtension();
         $extension->load(
             [[
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id',
                 'doctrine' => [
                     'track_dependency' => true,
                 ],
@@ -197,13 +184,10 @@ final class AppInsightsPHPExtensionTest extends TestCase
 
     public function test_twig_configuration()
     {
-        $this->container->setDefinition('failure_cache_id', new Definition(NullCache::class));
-
         $extension = new AppInsightsPHPExtension();
         $extension->load(
             [[
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id',
             ]],
             $this->container
         );
@@ -217,7 +201,6 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $extension->load(
             [[
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id',
                 'exceptions' => [
                     'ignored_exceptions' => [\RuntimeException::class],
                 ],
@@ -231,13 +214,10 @@ final class AppInsightsPHPExtensionTest extends TestCase
 
     public function test_monolog_configuration()
     {
-        $this->container->setDefinition('failure_cache_id', new Definition(NullCache::class));
-
         $extension = new AppInsightsPHPExtension();
         $extension->load(
             [[
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id',
                 'monolog' => [
                     'handlers' => [
                         [
@@ -259,7 +239,6 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $extension->load(
             [[
                 'instrumentation_key' => 'test_key',
-                'failure_cache_service_id' => 'failure_cache_id',
                 'gzip_enabled' => true,
             ]],
             $this->container

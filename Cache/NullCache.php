@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Tests\Double;
+namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Cache;
 
 use Psr\SimpleCache\CacheInterface;
 
