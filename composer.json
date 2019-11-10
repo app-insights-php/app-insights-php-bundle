@@ -10,9 +10,11 @@
         }
     ],
     "autoload": {
-        "psr-4": {"AppInsightsPHP\\Symfony\\AppInsightsPHPBundle\\": ""},
+        "psr-4": {
+            "AppInsightsPHP\\Symfony\\AppInsightsPHPBundle\\": "src/AppInsightsPHP/Symfony/AppInsightsPHPBundle"
+        },
         "exclude-from-classmap": [
-            "/Tests/"
+            "src/AppInsightsPHP/Symfony/AppInsightsPHPBundle/Tests/"
         ]
     },
     "suggest": {

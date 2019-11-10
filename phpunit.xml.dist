@@ -16,7 +16,7 @@
 
     <testsuites>
         <testsuite name="default">
-            <directory suffix="Test.php">./Tests</directory>
+            <directory suffix="Test.php">./src/AppInsightsPHP/Symfony/AppInsightsPHPBundle/Tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
