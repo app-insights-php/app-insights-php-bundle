@@ -15,7 +15,7 @@ namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener;
 
 use AppInsightsPHP\Client\Client;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 final class ExceptionListener implements EventSubscriberInterface
@@ -36,7 +36,7 @@ final class ExceptionListener implements EventSubscriberInterface
         ];
     }
 
-    public function onException(GetResponseForExceptionEvent $event)
+    public function onException(ExceptionEvent $event)
     {
         if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
             // instrumentation key is emtpy
@@ -47,7 +47,7 @@ final class ExceptionListener implements EventSubscriberInterface
             return;
         }
 
-        $this->telemetryClient->trackException($event->getException());
+        $this->telemetryClient->trackException($event->getThrowable());
         $this->exceptionLogged = true;
     }
 }

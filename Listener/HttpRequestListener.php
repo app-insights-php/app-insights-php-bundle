@@ -16,8 +16,8 @@ namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener;
 use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\FlatArray;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 final class HttpRequestListener implements EventSubscriberInterface
@@ -41,7 +41,7 @@ final class HttpRequestListener implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event)
     {
         if (!$event->isMasterRequest()) {
             return;
@@ -72,7 +72,7 @@ final class HttpRequestListener implements EventSubscriberInterface
         );
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         if (!$event->isMasterRequest()) {
             return;
