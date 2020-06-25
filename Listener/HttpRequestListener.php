@@ -47,6 +47,10 @@ final class HttpRequestListener implements EventSubscriberInterface
             return;
         }
 
+        if (!$this->telemetryClient->configuration()->requests()->isEnabled()) {
+            return;
+        }
+
         if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
             // instrumentation key is emtpy
             return;
@@ -75,6 +79,10 @@ final class HttpRequestListener implements EventSubscriberInterface
     public function onKernelResponse(ResponseEvent $event)
     {
         if (!$event->isMasterRequest()) {
+            return;
+        }
+
+        if (!$this->telemetryClient->configuration()->requests()->isEnabled()) {
             return;
         }
 
