@@ -48,7 +48,7 @@ final class HttpRequestListener implements EventSubscriberInterface
         }
 
         if (!$this->telemetryClient->configuration()->requests()->isEnabled()) {
-            return ;
+            return;
         }
 
         if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
@@ -83,7 +83,7 @@ final class HttpRequestListener implements EventSubscriberInterface
         }
 
         if (!$this->telemetryClient->configuration()->requests()->isEnabled()) {
-            return ;
+            return;
         }
 
         if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
