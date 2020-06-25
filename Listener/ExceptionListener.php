@@ -43,6 +43,10 @@ final class ExceptionListener implements EventSubscriberInterface
             return;
         }
 
+        if (!$this->telemetryClient->configuration()->exceptions()->isEnabled()) {
+            return ;
+        }
+
         if ($this->exceptionLogged) {
             return;
         }
