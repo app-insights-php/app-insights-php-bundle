@@ -26,7 +26,7 @@ use Psr\Log\NullLogger;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -112,12 +112,17 @@ final class AppInsightsPHPExtension extends Extension
 
         // Symfony
         if ($config['enabled']) {
-            $loader->load('app_insights_php_symfony.xml');
+            $loader->load('app_insights_php_symfony.php');
         }
 
         // Twig
+<<<<<<< HEAD
         if (\class_exists('Twig_Environment')) {
             $loader->load('app_insights_php_twig.xml');
+=======
+        if (class_exists('Twig_Environment')) {
+            $loader->load('app_insights_php_twig.php');
+>>>>>>> bbab848... Migrate configuration to PHP
         }
 
         // Doctrine
@@ -126,7 +131,7 @@ final class AppInsightsPHPExtension extends Extension
                 throw new \RuntimeException('Please first run `composer require download app-insights-php/doctrine-dependency-logger` if you want to log DBAL queries.');
             }
 
-            $loader->load('app_insights_php_doctrine.xml');
+            $loader->load('app_insights_php_doctrine.php');
         }
 
         // Monolog

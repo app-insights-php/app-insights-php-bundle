@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38c39a41bfe824e4f25fdf1c407c036b",
+    "content-hash": "d1ede25a28177db2aaf62942e91ae63f",
     "packages": [
         {
             "name": "app-insights-php/client",
