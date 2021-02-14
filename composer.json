@@ -24,7 +24,7 @@
         "app-insights-php/client": "^0.2.6",
         "symfony/framework-bundle": "^3.4|^4.0|^5.0",
         "guzzlehttp/guzzle": "^6.0",
-        "twig/twig": "^1.2|^2"
+        "twig/twig": "^3.3.0"
     },
     "require-dev": {
         "app-insights-php/doctrine-dependency-logger": "^0.2",
