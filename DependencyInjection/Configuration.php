@@ -22,7 +22,7 @@ final class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder('app_insights_php');
-        $rootNode = method_exists(TreeBuilder::class, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('app_insights_php');
+        $rootNode = \method_exists(TreeBuilder::class, 'getRootNode') ? $treeBuilder->getRootNode() : $treeBuilder->root('app_insights_php');
 
         $allowedLoggerTypes = ['trace', 'dependency'];
 
@@ -87,15 +87,14 @@ final class Configuration implements ConfigurationInterface
                                         ->defaultValue('trace')
                                         ->validate()
                                             ->ifNotInArray($allowedLoggerTypes)
-                                            ->thenInvalid(sprintf('Allowed types: [%s]', implode(', ', $allowedLoggerTypes)))
+                                            ->thenInvalid(\sprintf('Allowed types: [%s]', \implode(', ', $allowedLoggerTypes)))
                                         ->end()
                                 ->end()
                             ->end()
                         ->end()
                     ->end()
                 ->end()
-            ->end()
-        ;
+            ->end();
 
         return $treeBuilder;
     }

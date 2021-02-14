@@ -33,14 +33,14 @@ final class KernelTerminateListener implements EventSubscriberInterface
             KernelEvents::TERMINATE => ['onTerminate', -1000],
         ];
 
-        if (class_exists('Symfony\Component\Console\ConsoleEvents')) {
+        if (\class_exists('Symfony\Component\Console\ConsoleEvents')) {
             $listeners[ConsoleEvents::TERMINATE] = 'onTerminate';
         }
 
         return $listeners;
     }
 
-    public function onTerminate()
+    public function onTerminate() : void
     {
         if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
             // instrumentation key is empty

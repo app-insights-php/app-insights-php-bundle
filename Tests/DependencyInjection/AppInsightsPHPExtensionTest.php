@@ -26,12 +26,13 @@ use Symfony\Component\HttpKernel\KernelInterface;
 final class AppInsightsPHPExtensionTest extends TestCase
 {
     private $kernel;
+
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerBuilder
      */
     private $container;
 
-    protected function setUp(): void
+    protected function setUp() : void
     {
         parent::setUp();
 
@@ -39,7 +40,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->container = new ContainerBuilder();
     }
 
-    protected function tearDown(): void
+    protected function tearDown() : void
     {
         parent::tearDown();
 
@@ -47,7 +48,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->kernel = null;
     }
 
-    public function test_default_configuration()
+    public function test_default_configuration() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
@@ -76,7 +77,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertInstanceOf(Client::class, $this->container->get('app_insights_php.telemetry'));
     }
 
-    public function test_configuration_when_enabled_is_set_to_false()
+    public function test_configuration_when_enabled_is_set_to_false() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
@@ -105,7 +106,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertInstanceOf(Client::class, $this->container->get('app_insights_php.telemetry'));
     }
 
-    public function test_fallback_logger_configuration()
+    public function test_fallback_logger_configuration() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
@@ -124,7 +125,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         );
     }
 
-    public function test_fallback_logger_with_monolog_channel_configuration()
+    public function test_fallback_logger_with_monolog_channel_configuration() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
@@ -148,7 +149,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         );
     }
 
-    public function test_failure_cache_configuration()
+    public function test_failure_cache_configuration() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
@@ -165,7 +166,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         );
     }
 
-    public function test_doctrine_logger_configuration()
+    public function test_doctrine_logger_configuration() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
@@ -182,7 +183,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertInstanceOf(DependencyLogger::class, $this->container->get('app_insights_php.doctrine.logger.dependency'));
     }
 
-    public function test_twig_configuration()
+    public function test_twig_configuration() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
@@ -195,7 +196,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertInstanceOf(TelemetryExtension::class, $this->container->get('app_insights_php.twig.telemetry'));
     }
 
-    public function test_ignored_exceptions_configuration()
+    public function test_ignored_exceptions_configuration() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
@@ -212,7 +213,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertFalse($this->container->get('app_insights_php.configuration')->exceptions()->isIgnored(\Exception::class));
     }
 
-    public function test_monolog_configuration()
+    public function test_monolog_configuration() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(
@@ -233,7 +234,7 @@ final class AppInsightsPHPExtensionTest extends TestCase
         $this->assertInstanceOf(AppInsightsTraceHandler::class, $this->container->get('app_insights_php.monolog.handler.foo.logger'));
     }
 
-    public function test_gzip_configuration()
+    public function test_gzip_configuration() : void
     {
         $extension = new AppInsightsPHPExtension();
         $extension->load(

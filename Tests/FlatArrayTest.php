@@ -21,7 +21,7 @@ final class FlatArrayTest extends TestCase
     /**
      * @dataProvider arrays
      */
-    public function test_flat_array(array $flatArray, array $array): void
+    public function test_flat_array(array $flatArray, array $array) : void
     {
         $this->assertEquals(
             $flatArray,
@@ -29,7 +29,7 @@ final class FlatArrayTest extends TestCase
         );
     }
 
-    public function arrays(): \Generator
+    public function arrays() : \Generator
     {
         yield [[], []];
         yield [

@@ -35,14 +35,14 @@ final class TrackDependencyCommand extends Command
         $this->client = $client;
     }
 
-    protected function configure()
+    protected function configure() : void
     {
         $this
             ->setDescription('[<info>App Insights</info>] Track Dependency.')
             ->addArgument('name', InputArgument::REQUIRED, 'Dependency name')
             ->addOption('type', null, InputOption::VALUE_OPTIONAL, 'Dependency type', '')
             ->addOption('commandName', null, InputOption::VALUE_OPTIONAL, 'Dependency command name', '')
-            ->addOption('startTime', null, InputOption::VALUE_OPTIONAL, 'Start time (timestamp) when call to dependency was initialized', time())
+            ->addOption('startTime', null, InputOption::VALUE_OPTIONAL, 'Start time (timestamp) when call to dependency was initialized', \time())
             ->addOption('durationTime', null, InputOption::VALUE_OPTIONAL, 'Dependency call duration time in milliseconds', 0)
             ->addOption('isSuccessful', null, InputOption::VALUE_OPTIONAL, 'Was the dependency call successful', true)
             ->addOption('resultCode', null, InputOption::VALUE_OPTIONAL, 'Dependency result code')
@@ -50,7 +50,7 @@ final class TrackDependencyCommand extends Command
             ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -62,7 +62,7 @@ final class TrackDependencyCommand extends Command
             (int) $input->getOption('durationTime'),
             (bool) $input->getOption('isSuccessful'),
             $input->getOption('resultCode'),
-            $input->getOption('properties') ? json_decode($input->getOption('properties'), true) : null
+            $input->getOption('properties') ? \json_decode($input->getOption('properties'), true) : null
         );
 
         $dontFlush = false !== $input->getOption('dont-flush');
@@ -87,7 +87,7 @@ final class TrackDependencyCommand extends Command
             $io->note((string) $response->getBody());
         } else {
             $io->success('Something went wrong.');
-            $io->note('Status Code: '.$response->getStatusCode());
+            $io->note('Status Code: ' . $response->getStatusCode());
             $io->note((string) $response->getBody());
         }
 

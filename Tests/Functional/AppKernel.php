@@ -35,12 +35,22 @@ final class AppKernel extends BaseKernel
         ];
     }
 
-    protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader)
+    public function getCacheDir()
     {
-        $configFilePath = __DIR__.'/config/app_insights_php.php';
+        return \sys_get_temp_dir() . '/PHPAppInsights/cache';
+    }
 
-        if (!file_exists($configFilePath)) {
-            throw new \RuntimeException('Please create '.$configFilePath.' first, use '.$configFilePath.'.dist as a template');
+    public function getLogDir()
+    {
+        return \sys_get_temp_dir() . '/PHPAppInsights/logs';
+    }
+
+    protected function configureContainer(ContainerBuilder $c, LoaderInterface $loader) : void
+    {
+        $configFilePath = __DIR__ . '/config/app_insights_php.php';
+
+        if (!\file_exists($configFilePath)) {
+            throw new \RuntimeException('Please create ' . $configFilePath . ' first, use ' . $configFilePath . '.dist as a template');
         }
 
         $c->loadFromExtension('framework', [
@@ -63,17 +73,7 @@ final class AppKernel extends BaseKernel
         ]);
     }
 
-    public function getCacheDir()
-    {
-        return sys_get_temp_dir().'/PHPAppInsights/cache';
-    }
-
-    public function getLogDir()
-    {
-        return sys_get_temp_dir().'/PHPAppInsights/logs';
-    }
-
-    protected function configureRoutes(RouteCollectionBuilder $routes)
+    protected function configureRoutes(RouteCollectionBuilder $routes) : void
     {
     }
 }

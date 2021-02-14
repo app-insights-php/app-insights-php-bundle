@@ -19,24 +19,12 @@
         "app-insights-php/doctrine-dependency-logger": "Trace Doctrine DBAL queries as dependency metric type."
     },
     "require": {
-        "php": "^7.1",
+        "php": "^7.3 || ^8.0",
         "app-insights-php/monolog-handler": "^0.2.1",
-        "app-insights-php/client": "^0.2.3",
+        "app-insights-php/client": "^0.2.6",
         "symfony/framework-bundle": "^3.4|^4.0|^5.0",
         "guzzlehttp/guzzle": "^6.0",
         "twig/twig": "^1.2|^2"
-    },
-    "scripts": {
-        "test": [
-            "@test:php:cs",
-            "phpunit"
-        ],
-        "cs:php:fix": [
-            "php-cs-fixer fix"
-        ],
-        "test:php:cs": [
-            "php-cs-fixer fix -v --dry-run --using-cache=no"
-        ]
     },
     "require-dev": {
         "app-insights-php/doctrine-dependency-logger": "^0.2",
@@ -44,9 +32,18 @@
         "symfony/monolog-bundle": "^3.4",
         "phpunit/phpunit": "^8.5"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.2.x-dev"
-        }
+    "scripts": {
+        "phpunit": [
+            "phpunit --colors=always"
+        ],
+        "static:analyze": [
+            "php-cs-fixer fix --dry-run"
+        ],
+        "test" : [
+            "@phpunit"
+        ],
+        "cs:php:fix": [
+            "php-cs-fixer fix"
+        ]
     }
 }

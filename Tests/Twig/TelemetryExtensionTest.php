@@ -22,14 +22,14 @@ use Psr\SimpleCache\CacheInterface;
 
 final class TelemetryExtensionTest extends TestCase
 {
-    public function test_app_insights_php_function_without_user_id()
+    public function test_app_insights_php_function_without_user_id() : void
     {
         $client = (new ClientFactory('instrumentation_key', Configuration::createDefault(), $this->createMock(CacheInterface::class), new NullLogger()))->create();
         $client->getContext()->getOperationContext()->setId('operation_id');
         $twigExtension = new TelemetryExtension($client);
 
         $this->assertSame(
- <<<TWIG
+            <<<'TWIG'
 <script type="text/javascript">
 var appInsights=window.appInsights||function(a){
   function b(a){c[a]=function(){var b=arguments;c.queue.push(function(){c[a].apply(c,b)})}}var c={config:a},d=document,e=window;setTimeout(function(){var b=d.createElement("script");b.src=a.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js",d.getElementsByTagName("script")[0].parentNode.appendChild(b)});try{c.cookie=d.cookie}catch(a){}c.queue=[];for(var f=["Event","Exception","Metric","PageView","Trace","Dependency"];f.length;)b("track"+f.pop());if(b("setAuthenticatedUserContext"),b("clearAuthenticatedUserContext"),b("startTrackEvent"),b("stopTrackEvent"),b("startTrackPage"),b("stopTrackPage"),b("flush"),!a.disableExceptionTracking){f="onerror",b("_"+f);var g=e[f];e[f]=function(a,b,d,e,h){var i=g&&g(a,b,d,e,h);return!0!==i&&c["_"+f](a,b,d,e,h),i}}return c
@@ -44,18 +44,19 @@ window.appInsights.queue.push(function () {
 window.appInsights.trackPageView();
 </script>
 TWIG
-            , $twigExtension->appInsightsPHP()
+            ,
+            $twigExtension->appInsightsPHP()
         );
     }
 
-    public function test_app_insights_php_function_with_user_id()
+    public function test_app_insights_php_function_with_user_id() : void
     {
         $client = (new ClientFactory('instrumentation_key', Configuration::createDefault(), $this->createMock(CacheInterface::class), new NullLogger()))->create();
         $client->getContext()->getOperationContext()->setId('operation_id');
         $twigExtension = new TelemetryExtension($client);
 
         $this->assertSame(
-            <<<TWIG
+            <<<'TWIG'
 <script type="text/javascript">
 var appInsights=window.appInsights||function(a){
   function b(a){c[a]=function(){var b=arguments;c.queue.push(function(){c[a].apply(c,b)})}}var c={config:a},d=document,e=window;setTimeout(function(){var b=d.createElement("script");b.src=a.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js",d.getElementsByTagName("script")[0].parentNode.appendChild(b)});try{c.cookie=d.cookie}catch(a){}c.queue=[];for(var f=["Event","Exception","Metric","PageView","Trace","Dependency"];f.length;)b("track"+f.pop());if(b("setAuthenticatedUserContext"),b("clearAuthenticatedUserContext"),b("startTrackEvent"),b("stopTrackEvent"),b("startTrackPage"),b("stopTrackPage"),b("flush"),!a.disableExceptionTracking){f="onerror",b("_"+f);var g=e[f];e[f]=function(a,b,d,e,h){var i=g&&g(a,b,d,e,h);return!0!==i&&c["_"+f](a,b,d,e,h),i}}return c
@@ -71,11 +72,12 @@ window.appInsights.setAuthenticatedUserContext("norbert@orzechowicz.pl");
 window.appInsights.trackPageView();
 </script>
 TWIG
-            , $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
+            ,
+            $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
         );
     }
 
-    public function test_app_insights_php_function_with_disabled_tracking()
+    public function test_app_insights_php_function_with_disabled_tracking() : void
     {
         $config = Configuration::createDefault();
         $config->disable();
@@ -85,16 +87,17 @@ TWIG
         $twigExtension = new TelemetryExtension($client);
 
         $this->assertSame(
-            <<<TWIG
+            <<<'TWIG'
 <script type="text/javascript">
 //app_insights_php integration is disabled, please check bundle configuration.
 </script>
 TWIG
-            , $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
+            ,
+            $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
         );
     }
 
-    public function test_app_insights_php_function_with_empty_instrumentation_key()
+    public function test_app_insights_php_function_with_empty_instrumentation_key() : void
     {
         $config = Configuration::createDefault();
 
@@ -103,12 +106,13 @@ TWIG
         $twigExtension = new TelemetryExtension($client);
 
         $this->assertSame(
-            <<<TWIG
+            <<<'TWIG'
 <script type="text/javascript">
 //app_insights_php instrumentation_key is empty, please check bundle configuration.
 </script>
 TWIG
-            , $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
+            ,
+            $twigExtension->appInsightsPHP('norbert@orzechowicz.pl')
         );
     }
 }

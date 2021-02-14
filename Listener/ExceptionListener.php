@@ -21,6 +21,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 final class ExceptionListener implements EventSubscriberInterface
 {
     private $telemetryClient;
+
     private $exceptionLogged;
 
     public function __construct(Client $telemetryClient)
@@ -36,7 +37,7 @@ final class ExceptionListener implements EventSubscriberInterface
         ];
     }
 
-    public function onException(ExceptionEvent $event)
+    public function onException(ExceptionEvent $event) : void
     {
         if (!$this->telemetryClient->getContext()->getInstrumentationKey()) {
             // instrumentation key is emtpy

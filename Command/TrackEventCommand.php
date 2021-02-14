@@ -35,7 +35,7 @@ final class TrackEventCommand extends Command
         $this->client = $client;
     }
 
-    protected function configure()
+    protected function configure() : void
     {
         $this
             ->setDescription('[<info>App Insights</info>] Track Event.')
@@ -45,14 +45,14 @@ final class TrackEventCommand extends Command
             ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         $io = new SymfonyStyle($input, $output);
 
         $this->client->trackEvent(
             $input->getArgument('name'),
-            $input->getOption('properties') ? json_decode($input->getOption('properties'), true) : null,
-            $input->getOption('measurements') ? json_decode($input->getOption('measurements'), true) : null
+            $input->getOption('properties') ? \json_decode($input->getOption('properties'), true) : null,
+            $input->getOption('measurements') ? \json_decode($input->getOption('measurements'), true) : null
         );
 
         $dontFlush = false !== $input->getOption('dont-flush');
@@ -77,7 +77,7 @@ final class TrackEventCommand extends Command
             $io->note((string) $response->getBody());
         } else {
             $io->success('Something went wrong.');
-            $io->note('Status Code: '.$response->getStatusCode());
+            $io->note('Status Code: ' . $response->getStatusCode());
             $io->note((string) $response->getBody());
         }
 

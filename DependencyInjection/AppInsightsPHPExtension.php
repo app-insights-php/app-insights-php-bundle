@@ -32,11 +32,11 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 final class AppInsightsPHPExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container) : void
     {
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('app_insights_php.xml');
         $loader->load('app_insights_php_console.xml');
 
@@ -46,28 +46,33 @@ final class AppInsightsPHPExtension extends Extension
         // Make autowiring possible
         $container->setAlias(Client::class, 'app_insights_php.telemetry')->setPublic(true);
 
-        $container->setDefinition('app_insights_php.configuration.exceptions',
+        $container->setDefinition(
+            'app_insights_php.configuration.exceptions',
             new Definition(Exceptions::class, [
                 $config['exceptions']['enabled'],
                 (array) $config['exceptions']['ignored_exceptions'],
             ])
         );
-        $container->setDefinition('app_insights_php.configuration.dependencies',
+        $container->setDefinition(
+            'app_insights_php.configuration.dependencies',
             new Definition(Dependenies::class, [
                 $config['dependencies']['enabled'],
             ])
         );
-        $container->setDefinition('app_insights_php.configuration.requests',
+        $container->setDefinition(
+            'app_insights_php.configuration.requests',
             new Definition(Requests::class, [
                 $config['requests']['enabled'],
             ])
         );
-        $container->setDefinition('app_insights_php.configuration.traces',
+        $container->setDefinition(
+            'app_insights_php.configuration.traces',
             new Definition(Traces::class, [
                 $config['traces']['enabled'],
             ])
         );
-        $container->setDefinition('app_insights_php.configuration',
+        $container->setDefinition(
+            'app_insights_php.configuration',
             new Definition(Configuration::class, [
                 $config['enabled'],
                 $config['gzip_enabled'],
@@ -80,8 +85,7 @@ final class AppInsightsPHPExtension extends Extension
 
         $container
             ->getDefinition('app_insights_php.telemetry.factory')
-            ->replaceArgument(1, new Reference('app_insights_php.configuration'))
-        ;
+            ->replaceArgument(1, new Reference('app_insights_php.configuration'));
 
         if ((bool) $config['failure_cache_service_id']) {
             $container->getDefinition('app_insights_php.telemetry.factory')
@@ -112,13 +116,13 @@ final class AppInsightsPHPExtension extends Extension
         }
 
         // Twig
-        if (class_exists('Twig_Environment')) {
+        if (\class_exists('Twig_Environment')) {
             $loader->load('app_insights_php_twig.xml');
         }
 
         // Doctrine
         if ($config['doctrine']['track_dependency']) {
-            if (!class_exists('AppInsightsPHP\\Doctrine\\DBAL\\Logging\\DependencyLogger')) {
+            if (!\class_exists('AppInsightsPHP\\Doctrine\\DBAL\\Logging\\DependencyLogger')) {
                 throw new \RuntimeException('Please first run `composer require download app-insights-php/doctrine-dependency-logger` if you want to log DBAL queries.');
             }
 
@@ -128,7 +132,7 @@ final class AppInsightsPHPExtension extends Extension
         // Monolog
         if (\count($config['monolog']['handlers'])) {
             foreach ($config['monolog']['handlers'] as $name => $handlerConfig) {
-                $id = sprintf(sprintf('app_insights_php.monolog.handler.%s', $name));
+                $id = \sprintf(\sprintf('app_insights_php.monolog.handler.%s', $name));
 
                 switch ($handlerConfig['type']) {
                     case 'trace':
@@ -138,13 +142,16 @@ final class AppInsightsPHPExtension extends Extension
                             $this->levelToMonologConst($handlerConfig['level']),
                             (bool) $handlerConfig['bubble'],
                         ];
+
                     break;
                     case 'dependency':
                         $class = AppInsightsDependencyHandler::class;
                         $arguments = [
                             new Reference('app_insights_php.telemetry'),
                         ];
+
                         break;
+
                     default:
                         throw new \RuntimeException('Unrecognized monolog handler type %s', $handlerConfig['type']);
                 }
@@ -158,6 +165,6 @@ final class AppInsightsPHPExtension extends Extension
 
     private function levelToMonologConst($level)
     {
-        return \is_int($level) ? $level : \constant('Monolog\Logger::'.strtoupper($level));
+        return \is_int($level) ? $level : \constant('Monolog\Logger::' . \strtoupper($level));
     }
 }

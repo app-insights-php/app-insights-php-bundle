@@ -35,7 +35,7 @@ final class TrackExceptionCommand extends Command
         $this->client = $client;
     }
 
-    protected function configure()
+    protected function configure() : void
     {
         $this
             ->setDescription('[<info>App Insights</info>] Track Exception.')
@@ -46,14 +46,14 @@ final class TrackExceptionCommand extends Command
             ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output) : void
     {
-        if (!class_exists($input->getArgument('class'))) {
+        if (!\class_exists($input->getArgument('class'))) {
             throw new \InvalidArgumentException('Argument class must be a valid class');
         }
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -61,8 +61,8 @@ final class TrackExceptionCommand extends Command
 
         $this->client->trackException(
             new $class($input->getArgument('message')),
-            $input->getOption('properties') ? json_decode($input->getOption('properties'), true) : null,
-            $input->getOption('measurements') ? json_decode($input->getOption('measurements'), true) : null
+            $input->getOption('properties') ? \json_decode($input->getOption('properties'), true) : null,
+            $input->getOption('measurements') ? \json_decode($input->getOption('measurements'), true) : null
         );
 
         $dontFlush = false !== $input->getOption('dont-flush');
@@ -87,7 +87,7 @@ final class TrackExceptionCommand extends Command
             $io->note((string) $response->getBody());
         } else {
             $io->success('Something went wrong.');
-            $io->note('Status Code: '.$response->getStatusCode());
+            $io->note('Status Code: ' . $response->getStatusCode());
             $io->note((string) $response->getBody());
         }
 

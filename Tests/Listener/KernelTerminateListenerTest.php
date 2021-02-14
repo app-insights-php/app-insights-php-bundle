@@ -26,7 +26,7 @@ use Psr\SimpleCache\CacheInterface;
 
 final class KernelTerminateListenerTest extends TestCase
 {
-    public function test_do_nothing_when_instrumentation_key_is_empty()
+    public function test_do_nothing_when_instrumentation_key_is_empty() : void
     {
         $telemetryClientMock = $this->createMock(Telemetry_Client::class);
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
@@ -49,7 +49,7 @@ final class KernelTerminateListenerTest extends TestCase
         $listener->onTerminate();
     }
 
-    public function test_do_nothing_when_telemetry_queue_is_empty()
+    public function test_do_nothing_when_telemetry_queue_is_empty() : void
     {
         $telemetryClientMock = $this->createMock(Telemetry_Client::class);
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));
@@ -72,7 +72,7 @@ final class KernelTerminateListenerTest extends TestCase
         $listener->onTerminate();
     }
 
-    public function test_successful_flush()
+    public function test_successful_flush() : void
     {
         $telemetryClientMock = $this->createMock(Telemetry_Client::class);
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));

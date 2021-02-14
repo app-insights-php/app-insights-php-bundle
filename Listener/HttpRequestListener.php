@@ -25,7 +25,9 @@ final class HttpRequestListener implements EventSubscriberInterface
     private $telemetryClient;
 
     private $request;
+
     private $requestStartTime;
+
     private $requestStartTimeMs;
 
     public function __construct(Client $telemetryClient)
@@ -41,7 +43,7 @@ final class HttpRequestListener implements EventSubscriberInterface
         ];
     }
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event) : void
     {
         if (!$event->isMasterRequest()) {
             return;
@@ -56,8 +58,8 @@ final class HttpRequestListener implements EventSubscriberInterface
             return;
         }
 
-        $this->requestStartTime = time();
-        $this->requestStartTimeMs = (int) round(microtime(true) * 1000, 1);
+        $this->requestStartTime = \time();
+        $this->requestStartTimeMs = (int) \round(\microtime(true) * 1000, 1);
 
         $request = $event->getRequest();
 
@@ -67,16 +69,16 @@ final class HttpRequestListener implements EventSubscriberInterface
             $this->telemetryClient->getContext()->getSessionContext()->setId($request->getSession()->getId());
         }
 
-        $this->telemetryClient->getContext()->getOperationContext()->setName($request->getMethod().' '.$request->getPathInfo());
+        $this->telemetryClient->getContext()->getOperationContext()->setName($request->getMethod() . ' ' . $request->getPathInfo());
 
         $this->request = $this->telemetryClient->beginRequest(
-            $request->getMethod().' '.$request->getPathInfo(),
+            $request->getMethod() . ' ' . $request->getPathInfo(),
             $request->getUriForPath($request->getPathInfo()),
             $this->requestStartTime
         );
     }
 
-    public function onKernelResponse(ResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event) : void
     {
         if (!$event->isMasterRequest()) {
             return;
@@ -96,7 +98,7 @@ final class HttpRequestListener implements EventSubscriberInterface
 
         $this->telemetryClient->endRequest(
             $this->request,
-            (int) round(microtime(true) * 1000, 1) - $this->requestStartTimeMs,
+            (int) \round(\microtime(true) * 1000, 1) - $this->requestStartTimeMs,
             $response->getStatusCode(),
             $response->isSuccessful() || $response->isRedirection(),
             (new FlatArray([

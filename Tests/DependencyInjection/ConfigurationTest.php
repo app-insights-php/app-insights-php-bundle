@@ -20,7 +20,7 @@ use Symfony\Component\Config\Definition\Processor;
 
 final class ConfigurationTest extends Testcase
 {
-    public function test_default_configuration()
+    public function test_default_configuration() : void
     {
         $configs = [
             [
@@ -39,7 +39,7 @@ final class ConfigurationTest extends Testcase
         $this->assertEmpty($config['monolog']['handlers']);
     }
 
-    public function test_monolog_configuration()
+    public function test_monolog_configuration() : void
     {
         $configs = [
             [
@@ -69,7 +69,7 @@ final class ConfigurationTest extends Testcase
         $this->assertEquals('dependency', $config['monolog']['handlers']['bar.logger']['type']);
     }
 
-    public function test_gzip_configuration()
+    public function test_gzip_configuration() : void
     {
         $configs = [
             [
@@ -83,7 +83,7 @@ final class ConfigurationTest extends Testcase
         $this->assertTrue($config['gzip_enabled']);
     }
 
-    public function test_failure_cache_configuration()
+    public function test_failure_cache_configuration() : void
     {
         $configs = [
             [

@@ -36,7 +36,7 @@ final class TrackMetricCommand extends Command
         $this->client = $client;
     }
 
-    protected function configure()
+    protected function configure() : void
     {
         $this
             ->setDescription('[<info>App Insights</info>] Track Metric.')
@@ -51,18 +51,18 @@ final class TrackMetricCommand extends Command
             ->addOption('dont-flush', null, InputOption::VALUE_OPTIONAL, 'Don\'t flush client directly in the command, wait for the KernelTerminateListener', false);
     }
 
-    protected function initialize(InputInterface $input, OutputInterface $output)
+    protected function initialize(InputInterface $input, OutputInterface $output) : void
     {
-        if (!is_numeric($input->getArgument('value'))) {
+        if (!\is_numeric($input->getArgument('value'))) {
             throw new \InvalidArgumentException('Argument value must be a valid number');
         }
 
-        if ($input->getOption('type') && !\in_array($input->getOption('type'), [Data_Point_Type::Measurement, Data_Point_Type::Aggregation])) {
+        if ($input->getOption('type') && !\in_array($input->getOption('type'), [Data_Point_Type::Measurement, Data_Point_Type::Aggregation], true)) {
             throw new \InvalidArgumentException('Invalid measurement type');
         }
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute(InputInterface $input, OutputInterface $output) : int
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -74,7 +74,7 @@ final class TrackMetricCommand extends Command
             $input->getOption('min') ? (int) $input->getOption('min') : null,
             $input->getOption('max') ? (int) $input->getOption('max') : null,
             $input->getOption('standardDeviation') ? (float) $input->getOption('standardDeviation') : null,
-            $input->getOption('measurements') ? json_decode($input->getOption('measurements'), true) : null
+            $input->getOption('measurements') ? \json_decode($input->getOption('measurements'), true) : null
         );
 
         $dontFlush = false !== $input->getOption('dont-flush');
@@ -99,7 +99,7 @@ final class TrackMetricCommand extends Command
             $io->note((string) $response->getBody());
         } else {
             $io->success('Something went wrong.');
-            $io->note('Status Code: '.$response->getStatusCode());
+            $io->note('Status Code: ' . $response->getStatusCode());
             $io->note((string) $response->getBody());
         }
 

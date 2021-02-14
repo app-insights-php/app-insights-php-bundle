@@ -28,7 +28,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 
 final class TrackExceptionCommandTest extends TestCase
 {
-    public function test_tracking_metric()
+    public function test_tracking_metric() : void
     {
         $telemetryClientMock = $this->createMock(Telemetry_Client::class);
         $telemetryClientMock->method('getChannel')->willReturn($telemetryChannelMock = $this->createMock(Telemetry_Channel::class));

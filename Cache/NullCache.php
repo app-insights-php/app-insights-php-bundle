@@ -17,31 +17,31 @@ use Psr\SimpleCache\CacheInterface;
 
 final class NullCache implements CacheInterface
 {
-    public function get($key, $default = null)
+    public function get($key, $default = null) : void
     {
     }
 
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null) : void
     {
     }
 
-    public function delete($key)
+    public function delete($key) : void
     {
     }
 
-    public function clear()
+    public function clear() : void
     {
     }
 
-    public function getMultiple($keys, $default = null)
+    public function getMultiple($keys, $default = null) : void
     {
     }
 
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple($values, $ttl = null) : void
     {
     }
 
-    public function deleteMultiple($keys)
+    public function deleteMultiple($keys) : void
     {
     }
 

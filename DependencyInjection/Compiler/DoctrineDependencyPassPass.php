@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class DoctrineDependencyPassPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container) : void
     {
         if (false === $container->getParameter('app_insights_php.doctrine.track_dependency')) {
             return;
@@ -29,7 +29,7 @@ final class DoctrineDependencyPassPass implements CompilerPassInterface
 
         foreach ($doctrine as $connectionId) {
             $container
-                ->getDefinition(sprintf('%s.configuration', $connectionId))
+                ->getDefinition(\sprintf('%s.configuration', $connectionId))
                 ->addMethodCall('setSQLLogger', [new Reference('app_insights_php.doctrine.logger.dependency')]);
         }
     }

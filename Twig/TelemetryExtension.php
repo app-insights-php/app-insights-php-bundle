@@ -29,19 +29,21 @@ final class TelemetryExtension extends AbstractExtension
     /**
      * {@inheritdoc}
      */
-    public function getFunctions(): array
+    public function getFunctions() : array
     {
         return [
             new TwigFunction('app_insights_php', [$this, 'appInsightsPHP'], ['is_safe' => ['html']]),
         ];
     }
 
-    public function appInsightsPHP(?string $userId = null): string
+    public function appInsightsPHP(?string $userId = null) : string
     {
         $script = "<script type=\"text/javascript\">\n";
+
         if ($this->client->configuration()->isEnabled()) {
             if ($this->client->getContext()->getInstrumentationKey()) {
-                $script .= sprintf(<<<JS
+                $script .= \sprintf(
+                    <<<JS
 var appInsights=window.appInsights||function(a){
   function b(a){c[a]=function(){var b=arguments;c.queue.push(function(){c[a].apply(c,b)})}}var c={config:a},d=document,e=window;setTimeout(function(){var b=d.createElement("script");b.src=a.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js",d.getElementsByTagName("script")[0].parentNode.appendChild(b)});try{c.cookie=d.cookie}catch(a){}c.queue=[];for(var f=["Event","Exception","Metric","PageView","Trace","Dependency"];f.length;)b("track"+f.pop());if(b("setAuthenticatedUserContext"),b("clearAuthenticatedUserContext"),b("startTrackEvent"),b("stopTrackEvent"),b("startTrackPage"),b("stopTrackPage"),b("flush"),!a.disableExceptionTracking){f="onerror",b("_"+f);var g=e[f];e[f]=function(a,b,d,e,h){var i=g&&g(a,b,d,e,h);return!0!==i&&c["_"+f](a,b,d,e,h),i}}return c
   }({
@@ -53,12 +55,13 @@ window.appInsights.queue.push(function () {
     appInsights.context.operation.id = '%s';
 });\n
 JS
-                    , $this->client->getContext()->getInstrumentationKey(),
+                    ,
+                    $this->client->getContext()->getInstrumentationKey(),
                     $this->client->getContext()->getOperationContext()->getId()
                 );
 
                 if ($userId) {
-                    $script .= sprintf("window.appInsights.setAuthenticatedUserContext(\"%s\");\n", $userId);
+                    $script .= \sprintf("window.appInsights.setAuthenticatedUserContext(\"%s\");\n", $userId);
                 }
 
                 $script .= "window.appInsights.trackPageView();\n";
