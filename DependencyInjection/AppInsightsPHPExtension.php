@@ -116,7 +116,7 @@ final class AppInsightsPHPExtension extends Extension
         }
 
         // Twig
-        if (\class_exists('Twig_Environment')) {
+        if (\class_exists('Twig_Environment') || \class_exists('Twig\\Environment')) {
             $loader->load('app_insights_php_twig.php');
         }
 
