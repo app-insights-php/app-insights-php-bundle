@@ -30,7 +30,7 @@
         "app-insights-php/doctrine-dependency-logger": "^0.2",
         "friendsofphp/php-cs-fixer": "^2.14",
         "symfony/monolog-bundle": "^3.4",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^9.5"
     },
     "scripts": {
         "phpunit": [
