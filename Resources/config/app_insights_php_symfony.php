@@ -11,13 +11,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\ExceptionListener;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\HttpRequestListener;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener\KernelTerminateListener;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
+return static function (ContainerConfigurator $containerConfigurator) : void {
     $services = $containerConfigurator->services();
 
     $services->set('app_insights_php.symfony.listener.http_request', HttpRequestListener::class)

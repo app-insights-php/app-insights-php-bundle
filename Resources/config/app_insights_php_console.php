@@ -11,14 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command\TrackDependencyCommand;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command\TrackEventCommand;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command\TrackExceptionCommand;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Command\TrackMetricCommand;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 
-return static function (ContainerConfigurator $containerConfigurator): void {
+return static function (ContainerConfigurator $containerConfigurator) : void {
     $services = $containerConfigurator->services();
 
     $services->set('app_insights_php.symfony.command.track_dependency', TrackDependencyCommand::class)

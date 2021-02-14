@@ -36,9 +36,9 @@ final class AppInsightsPHPExtension extends Extension
     {
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('app_insights_php.xml');
-        $loader->load('app_insights_php_console.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('app_insights_php.php');
+        $loader->load('app_insights_php_console.php');
 
         $container->setParameter('app_insights_php.instrumentation_key', $config['instrumentation_key']);
         $container->setParameter('app_insights_php.doctrine.track_dependency', $config['doctrine']['track_dependency']);
@@ -116,13 +116,8 @@ final class AppInsightsPHPExtension extends Extension
         }
 
         // Twig
-<<<<<<< HEAD
         if (\class_exists('Twig_Environment')) {
-            $loader->load('app_insights_php_twig.xml');
-=======
-        if (class_exists('Twig_Environment')) {
             $loader->load('app_insights_php_twig.php');
->>>>>>> bbab848... Migrate configuration to PHP
         }
 
         // Doctrine
