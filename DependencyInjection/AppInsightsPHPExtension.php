@@ -26,7 +26,7 @@ use Psr\Log\NullLogger;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
@@ -36,9 +36,9 @@ final class AppInsightsPHPExtension extends Extension
     {
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('app_insights_php.xml');
-        $loader->load('app_insights_php_console.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader->load('app_insights_php.php');
+        $loader->load('app_insights_php_console.php');
 
         $container->setParameter('app_insights_php.instrumentation_key', $config['instrumentation_key']);
         $container->setParameter('app_insights_php.doctrine.track_dependency', $config['doctrine']['track_dependency']);
@@ -112,12 +112,12 @@ final class AppInsightsPHPExtension extends Extension
 
         // Symfony
         if ($config['enabled']) {
-            $loader->load('app_insights_php_symfony.xml');
+            $loader->load('app_insights_php_symfony.php');
         }
 
         // Twig
-        if (\class_exists('Twig_Environment')) {
-            $loader->load('app_insights_php_twig.xml');
+        if (\class_exists('Twig_Environment') || \class_exists('Twig\\Environment')) {
+            $loader->load('app_insights_php_twig.php');
         }
 
         // Doctrine
@@ -126,7 +126,7 @@ final class AppInsightsPHPExtension extends Extension
                 throw new \RuntimeException('Please first run `composer require download app-insights-php/doctrine-dependency-logger` if you want to log DBAL queries.');
             }
 
-            $loader->load('app_insights_php_doctrine.xml');
+            $loader->load('app_insights_php_doctrine.php');
         }
 
         // Monolog
