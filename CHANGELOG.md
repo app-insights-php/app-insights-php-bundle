@@ -1,6 +1,7 @@
 ## [Unreleased] - 2021-02-14
 
 ### Changed
+- [de4c55](https://github.com/app-insights-php/app-insights-php-bundle/commit/de4c557604dbb52764cc4b8677b1efc5ece1e15c) - **dependencies** - [@norberttech](https://github.com/norberttech)
 - [779365](https://github.com/app-insights-php/app-insights-php-bundle/commit/779365cb122cbb45071d759c01b48bcc80e53a53) - **PHP 8 update, aeon-php/automation integration, updated dependencies** - [@norberttech](https://github.com/norberttech)
 
 ## [0.2.5] - 2020-06-25
