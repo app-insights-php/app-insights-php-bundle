@@ -1,4 +1,4 @@
-## [Unreleased] - 2021-02-14
+## [0.2.6] - 2021-02-14
 
 ### Added
 - [#39](https://github.com/app-insights-php/app-insights-php-bundle/pull/39) - **Support for Twig ^3.0** - [@norberttech](https://github.com/norberttech)
