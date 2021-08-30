@@ -28,7 +28,7 @@
     },
     "require-dev": {
         "app-insights-php/doctrine-dependency-logger": "^0.2",
-        "friendsofphp/php-cs-fixer": "^2.14",
+        "friendsofphp/php-cs-fixer": "^3.1",
         "symfony/monolog-bundle": "^3.4",
         "phpunit/phpunit": "^9.5"
     },
