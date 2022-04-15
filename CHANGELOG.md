@@ -1,4 +1,4 @@
-## [Unreleased] - 2022-04-15
+## [0.2.7] - 2022-04-15
 
 ### Changed
 - [#112](https://github.com/app-insights-php/app-insights-php-bundle/pull/112) - **Updated project to php 8.1** - [@norberttech](https://github.com/norberttech)
