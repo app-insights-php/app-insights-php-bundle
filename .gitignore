@@ -1,3 +1,4 @@
 /vendor/
 *.cache
+var
 /Tests/Functional/config/app_insights_php.php
