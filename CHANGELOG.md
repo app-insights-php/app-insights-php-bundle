@@ -1,3 +1,8 @@
+## [Unreleased] - 2022-04-15
+
+### Removed
+- [bd2655](https://github.com/app-insights-php/app-insights-php-bundle/commit/bd2655c9852a5d4ce599e4cb21171f06c3696dcf) - **var from git repo** - [@norberttech](https://github.com/norberttech)
+
 ## [0.2.7] - 2022-04-15
 
 ### Changed
