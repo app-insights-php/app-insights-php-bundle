@@ -19,9 +19,9 @@
         "app-insights-php/doctrine-dependency-logger": "Trace Doctrine DBAL queries as dependency metric type."
     },
     "require": {
-        "php": "^7.3 || ^8.0",
+        "php": "^7.3 || ~8.0 || ~8.1",
         "app-insights-php/monolog-handler": "^0.2.1",
-        "app-insights-php/client": "^0.2.6",
+        "app-insights-php/client": "^0.2.7",
         "symfony/framework-bundle": "^3.4|^4.0|^4.4|^5.0|^5.1",
         "guzzlehttp/guzzle": "^6.0",
         "twig/twig": "^1.2|^2|^3"
@@ -30,7 +30,7 @@
         "app-insights-php/doctrine-dependency-logger": "^0.2",
         "friendsofphp/php-cs-fixer": "^3.4",
         "symfony/monolog-bundle": "^3.4",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5.20"
     },
     "scripts": {
         "phpunit": [

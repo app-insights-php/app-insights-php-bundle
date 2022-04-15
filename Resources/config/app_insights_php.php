@@ -11,10 +11,10 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Client\ClientFactory;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\DependencyInjection\Reference;
 
 return static function (ContainerConfigurator $containerConfigurator) : void {
     $services = $containerConfigurator->services();
@@ -24,5 +24,5 @@ return static function (ContainerConfigurator $containerConfigurator) : void {
 
     $services->set('app_insights_php.telemetry', Client::class)
         ->public()
-        ->factory([ref('app_insights_php.telemetry.factory'), 'create']);
+        ->factory([new Reference('app_insights_php.telemetry.factory'), 'create']);
 };
