@@ -11,14 +11,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-use function Symfony\Component\DependencyInjection\Loader\Configurator\ref;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Twig\TelemetryExtension;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\DependencyInjection\Reference;
 
 return static function (ContainerConfigurator $containerConfigurator) : void {
     $services = $containerConfigurator->services();
 
     $services->set('app_insights_php.twig.telemetry', TelemetryExtension::class)
         ->tag('twig.extension', [])
-        ->args([ref('app_insights_php.telemetry')]);
+        ->args([new Reference('app_insights_php.telemetry')]);
 };
