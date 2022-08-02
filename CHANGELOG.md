@@ -1,4 +1,7 @@
-## [Unreleased] - 2022-04-15
+## [Unreleased] - 2022-08-02
+
+### Updated
+- [1be250](https://github.com/app-insights-php/app-insights-php-bundle/commit/1be250cd511871379bb71763e9be6abca76088f8) - **dependencies** - [@norberttech](https://github.com/norberttech)
 
 ### Removed
 - [bd2655](https://github.com/app-insights-php/app-insights-php-bundle/commit/bd2655c9852a5d4ce599e4cb21171f06c3696dcf) - **var from git repo** - [@norberttech](https://github.com/norberttech)
