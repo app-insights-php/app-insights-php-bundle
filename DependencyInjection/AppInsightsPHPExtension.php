@@ -143,7 +143,7 @@ final class AppInsightsPHPExtension extends Extension
                             (bool) $handlerConfig['bubble'],
                         ];
 
-                    break;
+                        break;
                     case 'dependency':
                         $class = AppInsightsDependencyHandler::class;
                         $arguments = [
