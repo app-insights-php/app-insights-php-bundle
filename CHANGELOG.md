@@ -1,4 +1,4 @@
-## [Unreleased] - 2022-08-02
+## [0.2.8] - 2022-08-02
 
 ### Updated
 - [8e8d14](https://github.com/app-insights-php/app-insights-php-bundle/commit/8e8d14417d488f808aefd575ee2b34b5690ab8ea) - **client to the latest version** - [@norberttech](https://github.com/norberttech)
