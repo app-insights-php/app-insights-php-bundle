@@ -1,3 +1,8 @@
+## [Unreleased] - 2022-08-09
+
+### Updated
+- [231d81](https://github.com/app-insights-php/app-insights-php-bundle/commit/231d810e8efc5ec05ffd2c4512dd9d20c5231564) - **dependencieS** - [@norberttech](https://github.com/norberttech)
+
 ## [0.2.8] - 2022-08-02
 
 ### Updated
