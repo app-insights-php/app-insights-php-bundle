@@ -45,7 +45,7 @@ final class HttpRequestListener implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event) : void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -80,7 +80,7 @@ final class HttpRequestListener implements EventSubscriberInterface
 
     public function onKernelResponse(ResponseEvent $event) : void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
