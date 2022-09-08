@@ -2,17 +2,9 @@
 
 declare(strict_types=1);
 
-/*
- * This file is part of the App Insights PHP project.
- *
- * (c) Norbert Orzechowicz <norbert@orzechowicz.pl>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
+namespace App\Azure\ApplicationInsights\Extension;
 
-namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\DependencyInjection;
-
+use App\Azure\ApplicationInsights\Handler\AzureAppInsightsTraceHandler;
 use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Client\Configuration;
 use AppInsightsPHP\Client\Configuration\Dependenies;
@@ -20,7 +12,6 @@ use AppInsightsPHP\Client\Configuration\Exceptions;
 use AppInsightsPHP\Client\Configuration\Requests;
 use AppInsightsPHP\Client\Configuration\Traces;
 use AppInsightsPHP\Monolog\Handler\AppInsightsDependencyHandler;
-use AppInsightsPHP\Monolog\Handler\AppInsightsTraceHandler;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\Cache\NullCache;
 use Psr\Log\NullLogger;
 use Symfony\Component\Config\FileLocator;
@@ -30,9 +21,9 @@ use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-final class AppInsightsPHPExtension extends Extension
+class AppInsightsExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container) : void
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $config = $this->processConfiguration($this->getConfiguration($configs, $container), $configs);
 
@@ -133,13 +124,14 @@ final class AppInsightsPHPExtension extends Extension
         if (\count($config['monolog']['handlers'])) {
             foreach ($config['monolog']['handlers'] as $name => $handlerConfig) {
                 $id = \sprintf(\sprintf('app_insights_php.monolog.handler.%s', $name));
-
+                // ARS-1129 Changed chandler
                 switch ($handlerConfig['type']) {
                     case 'trace':
-                        $class = AppInsightsTraceHandler::class;
+                        $class = AzureAppInsightsTraceHandler::class;
+                        $level = $handlerConfig['level'];
                         $arguments = [
                             new Reference('app_insights_php.telemetry'),
-                            $this->levelToMonologConst($handlerConfig['level']),
+                            \is_int($level) ? $level : \constant('Monolog\Logger::' . \strtoupper($level)),
                             (bool) $handlerConfig['bubble'],
                         ];
 
@@ -161,10 +153,5 @@ final class AppInsightsPHPExtension extends Extension
                     ->setPublic(false);
             }
         }
-    }
-
-    private function levelToMonologConst($level)
-    {
-        return \is_int($level) ? $level : \constant('Monolog\Logger::' . \strtoupper($level));
     }
 }
