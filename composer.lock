@@ -50,23 +50,23 @@
         },
         {
             "name": "app-insights-php/client",
-            "version": "0.2.11",
+            "version": "0.2.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/app-insights-php/client.git",
-                "reference": "3d1f43b684e31f076422f9732317df760c58bb40"
+                "reference": "bfb9f84230ebdc38f59b60acd7b36b706172aa72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/app-insights-php/client/zipball/3d1f43b684e31f076422f9732317df760c58bb40",
-                "reference": "3d1f43b684e31f076422f9732317df760c58bb40",
+                "url": "https://api.github.com/repos/app-insights-php/client/zipball/bfb9f84230ebdc38f59b60acd7b36b706172aa72",
+                "reference": "bfb9f84230ebdc38f59b60acd7b36b706172aa72",
                 "shasum": ""
             },
             "require": {
                 "app-insights-php/application-insights": "^0.4.8",
                 "guzzlehttp/guzzle": "^7.4",
-                "php": "^7.4 || ~8.0 || ~8.1",
-                "psr/log": "^1.1",
+                "php": "^7.4 || ^8.0",
+                "psr/log": "^1.1 || ^2.0 || ^3.0",
                 "psr/simple-cache": "^1.0"
             },
             "require-dev": {
@@ -92,7 +92,7 @@
             "description": "Microsoft App Insights telemetry client php wrapper",
             "support": {
                 "issues": "https://github.com/app-insights-php/client/issues",
-                "source": "https://github.com/app-insights-php/client/tree/0.2.11"
+                "source": "https://github.com/app-insights-php/client/tree/0.2.12"
             },
             "funding": [
                 {
@@ -100,7 +100,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-08-09T18:00:59+00:00"
+            "time": "2023-03-21T09:04:34+00:00"
         },
         {
             "name": "app-insights-php/monolog-handler",
@@ -367,16 +367,16 @@
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "2.4.1",
+            "version": "2.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "69568e4293f4fa993f3b0e51c9723e1e17c41379"
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/69568e4293f4fa993f3b0e51c9723e1e17c41379",
-                "reference": "69568e4293f4fa993f3b0e51c9723e1e17c41379",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
+                "reference": "3cf1b6d4f0c820a2cf8bcaec39fc698f3443b5cf",
                 "shasum": ""
             },
             "require": {
@@ -466,7 +466,7 @@
             ],
             "support": {
                 "issues": "https://github.com/guzzle/psr7/issues",
-                "source": "https://github.com/guzzle/psr7/tree/2.4.1"
+                "source": "https://github.com/guzzle/psr7/tree/2.4.4"
             },
             "funding": [
                 {
@@ -482,7 +482,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-08-28T14:45:39+00:00"
+            "time": "2023-03-09T13:19:02+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -895,30 +895,30 @@
         },
         {
             "name": "psr/log",
-            "version": "1.1.4",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11"
+                "reference": "ef29f6d262798707a9edd554e2b82517ef3a9376"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d49695b909c3b7628b6289db5479a1c204601f11",
-                "reference": "d49695b909c3b7628b6289db5479a1c204601f11",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/ef29f6d262798707a9edd554e2b82517ef3a9376",
+                "reference": "ef29f6d262798707a9edd554e2b82517ef3a9376",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=8.0.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "2.0.x-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Psr\\Log\\": "Psr/Log/"
+                    "Psr\\Log\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -939,9 +939,9 @@
                 "psr-3"
             ],
             "support": {
-                "source": "https://github.com/php-fig/log/tree/1.1.4"
+                "source": "https://github.com/php-fig/log/tree/2.0.0"
             },
-            "time": "2021-05-03T11:20:27+00:00"
+            "time": "2021-07-14T16:41:46+00:00"
         },
         {
             "name": "psr/simple-cache",
