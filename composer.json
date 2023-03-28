@@ -22,14 +22,14 @@
         "php": "~8.1 || ~8.2",
         "app-insights-php/monolog-handler": "^0.3",
         "app-insights-php/client": "^0.3",
-        "symfony/framework-bundle": "^3.4|^4.0|^4.4|^5.0|^5.1",
+        "symfony/framework-bundle": "~3.4||~4.4||~5.4||~6",
         "guzzlehttp/guzzle": "^7.4",
         "twig/twig": "^1.2|^2|^3"
     },
     "require-dev": {
         "app-insights-php/doctrine-dependency-logger": "^0.3",
         "friendsofphp/php-cs-fixer": "^3.4",
-        "symfony/monolog-bundle": "^2",
+        "symfony/monolog-bundle": "~2||~3",
         "phpunit/phpunit": "^10"
     },
     "scripts": {
