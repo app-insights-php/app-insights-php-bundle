@@ -1,4 +1,4 @@
-## [Unreleased] - 2023-03-28
+## [0.3.0] - 2023-03-28
 
 ### Updated
 - [bfea42](https://github.com/app-insights-php/app-insights-php-bundle/commit/bfea420bad6faa4ddda45fe0213471392798bc54) - **php version to php ~8.1||~8.2** - [@norberttech](https://github.com/norberttech)
