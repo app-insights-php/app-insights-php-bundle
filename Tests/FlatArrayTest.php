@@ -18,18 +18,7 @@ use PHPUnit\Framework\TestCase;
 
 final class FlatArrayTest extends TestCase
 {
-    /**
-     * @dataProvider arrays
-     */
-    public function test_flat_array(array $flatArray, array $array) : void
-    {
-        $this->assertEquals(
-            $flatArray,
-            (new FlatArray($array))()
-        );
-    }
-
-    public function arrays() : \Generator
+    public static function arrays() : \Generator
     {
         yield [[], []];
         yield [
@@ -66,5 +55,16 @@ final class FlatArrayTest extends TestCase
                 'tags' => ['primary', 'default', 'principle'],
             ],
         ];
+    }
+
+    /**
+     * @dataProvider arrays
+     */
+    public function test_flat_array(array $flatArray, array $array) : void
+    {
+        $this->assertEquals(
+            $flatArray,
+            (new FlatArray($array))()
+        );
     }
 }
