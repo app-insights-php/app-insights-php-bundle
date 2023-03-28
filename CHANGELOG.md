@@ -1,4 +1,4 @@
-## [Unreleased] - 2023-03-28
+## [0.3.1] - 2023-03-28
 
 ### Updated
 - [6d2e19](https://github.com/app-insights-php/app-insights-php-bundle/commit/6d2e19d2a70fcc262c990cdb361aecc2af7ba2ec) - **symfony dependencies** - [@norberttech](https://github.com/norberttech)
