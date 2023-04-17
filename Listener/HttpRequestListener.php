@@ -45,7 +45,7 @@ final class HttpRequestListener implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event) : void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             return;
         }
 
@@ -80,7 +80,7 @@ final class HttpRequestListener implements EventSubscriberInterface
 
     public function onKernelResponse(ResponseEvent $event) : void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             return;
         }
 
@@ -113,5 +113,13 @@ final class HttpRequestListener implements EventSubscriberInterface
                 'clientIps' => $request->getClientIps(),
             ]))()
         );
+    }
+
+    protected function isMainRequest(KernelEvent $event): bool
+    {
+        return method_exists($event, 'isMainRequest')
+            ? $event->isMainRequest()
+            : $event->isMasterRequest()
+        ;
     }
 }
