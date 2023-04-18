@@ -16,6 +16,7 @@ namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener;
 use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\FlatArray;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -115,11 +116,10 @@ final class HttpRequestListener implements EventSubscriberInterface
         );
     }
 
-    protected function isMainRequest(KernelEvent $event): bool
+    private function isMainRequest(KernelEvent $event) : bool
     {
-        return method_exists($event, 'isMainRequest')
+        return \method_exists($event, 'isMainRequest')
             ? $event->isMainRequest()
-            : $event->isMasterRequest()
-        ;
+            : $event->isMasterRequest();
     }
 }
