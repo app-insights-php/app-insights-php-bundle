@@ -16,6 +16,7 @@ namespace AppInsightsPHP\Symfony\AppInsightsPHPBundle\Listener;
 use AppInsightsPHP\Client\Client;
 use AppInsightsPHP\Symfony\AppInsightsPHPBundle\FlatArray;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -45,7 +46,7 @@ final class HttpRequestListener implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event) : void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             return;
         }
 
@@ -80,7 +81,7 @@ final class HttpRequestListener implements EventSubscriberInterface
 
     public function onKernelResponse(ResponseEvent $event) : void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             return;
         }
 
@@ -113,5 +114,12 @@ final class HttpRequestListener implements EventSubscriberInterface
                 'clientIps' => $request->getClientIps(),
             ]))()
         );
+    }
+
+    private function isMainRequest(KernelEvent $event) : bool
+    {
+        return \method_exists($event, 'isMainRequest')
+            ? $event->isMainRequest()
+            : $event->isMasterRequest();
     }
 }
